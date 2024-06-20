@@ -1,0 +1,25 @@
+[project]
+name = "fad"
+authors = [
+    {name = "Carl Michael Gaspar", email = "carl.michael.gaspar@icloud.com"},
+    {name = "Oliver G.B. Garrod", email = "oliver.garrod@fabdata.io"}
+]
+description = "Face alignment and decomposition tools"
+readme = "README.md"
+keywords = ["face-alignment", "feature-extraction", "face-morphing","wavelet-decomposition", "psychophysics","psychology-experiments"]
+license = {text = "Apache-2.0"}
+dependencies = [
+    "dlib",
+    "scikit-image"
+]
+version = "0.0.1"
+
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+
+[tool.setuptools.package-data]
+"fad.align.data" = ["*.dat"]
+"fad.align.tests.R" = ["*.csv"]
