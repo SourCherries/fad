@@ -1,3 +1,4 @@
+from pathlib import Path
 import os
 from fad import align as af
 import numpy as np
@@ -8,8 +9,10 @@ from skimage.util import montage
 
 
 # Grab faces that are already aligned from previous demo
-my_project_path = os.path.dirname(os.path.abspath(__file__))
-source_dir = my_project_path + os.path.sep + "an-unusual-pair" + os.path.sep
+# my_project_path = os.path.dirname(os.path.abspath(__file__))
+# source_dir = my_project_path + os.path.sep + "an-unusual-pair" + os.path.sep
+HERE = Path(__file__).resolve().parent
+source_dir = str(HERE / "an-unusual-pair") + os.sep
 
 # path_parts = my_project_path.split(os.path.sep)[0:-1]
 # source_dir = (os.path.sep.join(path_parts) + os.path.sep +
@@ -67,7 +70,7 @@ the_aperture, aperture_path = af.place_aperture(morph_path, "N",
                                                 "png",
                                                 aperture_type="MossEgg",
                                                 contrast_norm="max",
-                                                color_of_result="rgb")
+                                                color_of_result="grayscale")
 
 # Plot and write montage of morphs
 infile = aperture_path + "N0.png"
@@ -77,7 +80,8 @@ for i in range(num_morphs):
     infile = aperture_path + "N" + str(i) + ".png"
     im = np.array(PilImage.open(infile))
     all_images[i, :, :, :] = im
-im_montage = montage(all_images, multichannel=True, grid_shape=(1, 10)).astype(np.uint8)
+# im_montage = montage(all_images, multichannel=True, grid_shape=(1, 10)).astype(np.uint8)
+im_montage = montage(all_images, grid_shape=(1, 10), channel_axis=3).astype(np.uint8)
 
 fig, ax = plt.subplots(subplot_kw={'aspect': 'equal'})
 fig.set_size_inches(w=2*num_morphs, h=2)

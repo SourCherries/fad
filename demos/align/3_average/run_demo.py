@@ -1,3 +1,4 @@
+from pathlib import Path
 import os
 from fad import align as af
 import numpy as np
@@ -22,8 +23,10 @@ def slim_fig(ax):
 
 # Path for faces directory
 merkel_folder = "faces-of-merkel"
-my_project_path = os.path.dirname(os.path.abspath(__file__))
-my_faces_path = my_project_path + os.path.sep + merkel_folder + os.path.sep
+# my_project_path = os.path.dirname(os.path.abspath(__file__))
+# my_faces_path = my_project_path + os.path.sep + merkel_folder + os.path.sep
+HERE = Path(__file__).resolve().parent
+my_faces_path = str(HERE / merkel_folder) + os.sep
 
 # Analyze all image files whose filenames have these properties ...
 file_prefix = "merkel"
@@ -102,7 +105,8 @@ plt.savefig('D_enhanced_average.png', bbox_inches = 'tight', pad_inches = 0)
 # im1 = np.array(im1.convert("L"))
 # im2 = np.array(im2.convert("L"))
 
-the_aperture = af.place_aperture(aligned_path, aligned_path, no_save=True)
+# the_aperture = af.place_aperture(aligned_path, aligned_path, no_save=True)
+the_aperture = af.place_aperture(aligned_path, file_prefix='', file_postfix='jpg', no_save=True)
 inner_map = (the_aperture * 255) > 16
 
 nim1 = af.contrast_stretch(simple_average, inner_locs=inner_map, type="mean_127")

@@ -28,7 +28,7 @@ def clone_directory_tree(MotherDir, new_dir="aligned", FilePrefix="", FilePostfi
     for p in P:
         new_dir = new_directory / p.relative_to(MotherDir)
         if not new_dir.exists():
-            new_dir.mkdir(parents=False, exist_ok=False) # NEED TEST
+            new_dir.mkdir(parents=True, exist_ok=True) # NEED TEST
         print(new_dir)
     return str(new_directory) + os.sep
 

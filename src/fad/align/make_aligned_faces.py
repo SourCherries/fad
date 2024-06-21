@@ -7,6 +7,7 @@ from math import floor, ceil
 import numpy as np
 import math
 import os.path
+from pathlib import Path
 
 # image io and grayscale conversion
 from PIL import Image as PilImage
@@ -893,6 +894,9 @@ def align_procrustes(source_dir, file_prefix='', file_postfix='jpg',
 def place_aperture(source_dir, file_prefix='', file_postfix='jpg',
                    aperture_type="MossEgg", no_save=False, contrast_norm="max",
                    color_of_result='grayscale'):
+    
+    source_dir = str(Path(source_dir)) + os.sep
+
     if color_of_result == 'rgb':
         assert (contrast_norm=="max") or (contrast_norm==None)
 
@@ -977,7 +981,7 @@ def place_aperture(source_dir, file_prefix='', file_postfix='jpg',
             for infile, outfile in zip(source_files, output_files):
                 # rgb = cv2.imread(infile)
                 rgb = np.array(PilImage.open(infile))
-                rgb = contrast_stretch(rgb, inner_locs=[], type=contrast_norm)
+                rgb = contrast_stretch(rgb, inner_locs=None, type=contrast_norm)
                 BGRA = make_four_channel_image(img=rgb, aperture=the_aperture)
 
                 out_png = outfile.split(".")[0] + ".png"
@@ -994,15 +998,17 @@ def place_aperture(source_dir, file_prefix='', file_postfix='jpg',
 
 
 def get_mean_image(file_path, max_inner_face_contrast=False):
-    with io.open(file_path + '/landmarks.txt', 'r') as f:
+    file_path = str(Path(file_path))
+    with io.open(file_path + os.sep + '/landmarks.txt', 'r') as f:
         imported_landmarks = json.loads(f.readlines()[0].strip())
     guys = list(imported_landmarks.keys())
-    gray_0 = np.array(PilImage.open(file_path + guys[0]).convert("L"))
+    gray_0 = np.array(PilImage.open(file_path + os.sep + guys[0]).convert("L"))
     shape_0 = gray_0.shape
 
     if max_inner_face_contrast:
         # Normalize contrast within aperture, common mean of 127.5
-        the_aperture = place_aperture(file_path, file_path, no_save=True)
+        # the_aperture = place_aperture(file_path, file_path, no_save=True)
+        the_aperture = place_aperture(file_path, no_save=True)
         inner_map = (the_aperture * 255) > 16
         gray_0 = contrast_stretch(gray_0, inner_locs=inner_map, type="mean_127") - 127.5
     else:
@@ -1013,7 +1019,7 @@ def get_mean_image(file_path, max_inner_face_contrast=False):
 
     mean_image = gray_0
     for guy in guys[1:]:
-        gray = np.array(PilImage.open(file_path + guy).convert("L"))
+        gray = np.array(PilImage.open(file_path + os.sep + guy).convert("L"))
         if gray.shape==shape_0:
 
             if max_inner_face_contrast:
@@ -1099,7 +1105,8 @@ def warp_to_mean_landmarks(source_dir, file_prefix='', file_postfix='jpg'):
     get_landmarks(output_dir, "P", "png")
 
     # Get aperture for inner-face
-    the_aperture = place_aperture(output_dir, output_dir, no_save=True)
+    # the_aperture = place_aperture(output_dir, output_dir, no_save=True)
+    the_aperture = place_aperture(output_dir, file_prefix='P', file_postfix='png', no_save=True)
     inner_map = (the_aperture * 255) > 16
 
     # Normalize contrast within aperture, common mean of 127.5
@@ -1190,7 +1197,8 @@ def morph_between_two_faces(source_dir, do_these, num_morphs, file_prefix='',
     get_landmarks(output_dir, "P", "png")
 
     # Get aperture for inner-face
-    the_aperture = place_aperture(output_dir, output_dir, no_save=True)
+    # the_aperture = place_aperture(output_dir, output_dir, no_save=True)
+    the_aperture = place_aperture(output_dir, file_prefix='P', file_postfix='png', no_save=True)
     inner_map = (the_aperture * 255) > 16
 
     # Normalize contrast within aperture, common mean of 127.5

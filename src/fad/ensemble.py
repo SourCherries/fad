@@ -18,6 +18,7 @@ import matplotlib.pyplot as plt
 # import alignfaces as afa
 # import .align as afa
 from .align.make_aligned_faces import get_source_files, get_landmarks, align_procrustes
+from .align.make_files import clone_directory_tree
 
 from .features.filters import face_filters, get_eo, eo_montage
 from .features.roi import get_feature_roi
@@ -556,12 +557,12 @@ def prepare_features(ens):
     pre=str(ens.file_bookends[0])
     post=str(ens.file_bookends[1])
     features_error = "Unknown"
-    # aligned_files = afa.make_files.get_source_files(ens.dir_aligned, pre, post)
+    clone_directory_tree(ens.dir_aligned, new_dir='wrff', FilePrefix=pre, FilePostfix=post)
     aligned_files = get_source_files(ens.dir_aligned, pre, post)
     files_rel_aligned = [str(Path(f).relative_to(ens.dir_aligned)) for f in aligned_files]
     if not ens.dir_wrff.exists():
         print("WRFF folder does not exist. Creating.")
-        ens.dir_wrff.mkdir(parents=False, exist_ok=False)
+        ens.dir_wrff.mkdir(parents=False, exist_ok=False)        
         if ens.make_all_features:
             for f in list(ens.landmarks):
                 make_features(ens, f)
