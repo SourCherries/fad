@@ -71,6 +71,9 @@ venv.bak/
 # Other stuff specific to my package
 .DS_Store
 
+# demos/align/1_basic/faces-aligned/premium/women/*.jpg
+demos/align/1_basic/faces-aligned/*.jpg
+
 results/KUFD-DC/*jpg
 results/KUFD-ID/*jpg
 
