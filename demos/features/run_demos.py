@@ -9,19 +9,18 @@ import fad.features.shift_features as shift
 
 
 HERE = Path(__file__).resolve().parent
-CCFaceFolder = HERE.parent / "align" / "1_basic" / "faces"
-FRLFaceFolder = HERE / "FRL-LS"
+FRL_folder = HERE / "FRL-LS"
+
 
 # Basic usage
 bookends = ("","jpg")
-# CreativeCommons = fd.Ensemble(dir_source = CCFaceFolder, file_bookends = bookends)
-CreativeCommons = fd.Ensemble(dir_source = CCFaceFolder, file_bookends = bookends, INTER_PUPILLARY_DISTANCE = 64)
-CreativeCommons.list_faces()
-CreativeCommons.add_to_roster("premium/men/corey-haim")
-CreativeCommons.add_to_roster("premium/men/eric-mccormack")
-CreativeCommons.clip_roster_margins(margins=(1/6, 1/4))
-CreativeCommons.display_roster()
-CreativeCommonsOriginal = copy.deepcopy(CreativeCommons)
+FRL = fd.Ensemble(dir_source = FRL_folder, file_bookends = bookends, INTER_PUPILLARY_DISTANCE = 64)
+FRL.list_faces()
+FRL.add_to_roster("124_03")
+FRL.add_to_roster("014_03")
+FRL.clip_roster_margins(margins=(1/6, 1/4))
+FRL.display_roster()
+FRL_original = copy.deepcopy(FRL)
 
 
 # *******************************************************************
@@ -29,9 +28,9 @@ CreativeCommonsOriginal = copy.deepcopy(CreativeCommons)
 # *******************************************************************
 
 # Thatcher face -----------------------------------------------------
-CreativeCommons.roster_thatcher()
-CreativeCommons.combine_roster_features()
-CreativeCommons.display_roster()
+FRL.roster_thatcher()
+FRL.combine_roster_features()
+FRL.display_roster()
 
 # Montage of factorial Thatcher-by-Inverted
 #  -------------------------------------
@@ -40,9 +39,9 @@ CreativeCommons.display_roster()
 # | inverted-normal | inverted-Thatcher |
 #  -------------------------------------
 do_face = 0
-CreativeCommonsOriginal.combine_roster_features()
-Face0_Original = CreativeCommonsOriginal.Roster[do_face].F
-Face0_Thatcher = CreativeCommons.Roster[do_face].F
+FRL_original.combine_roster_features()
+Face0_Original = FRL_original.Roster[do_face].F
+Face0_Thatcher = FRL.Roster[do_face].F
 row0 = np.c_[Face0_Original, Face0_Thatcher]
 row1 = np.c_[shift.rotate_180(Face0_Original), shift.rotate_180(Face0_Thatcher)]
 montage = np.r_[row0, row1]
@@ -51,9 +50,9 @@ plt.imshow(montage, cmap="gray"); plt.show()
 # Chimeric face -----------------------------------------------------
 bookends = ("","jpg")
 
-FRL = fd.Ensemble(dir_source = FRLFaceFolder, file_bookends = bookends, INTER_PUPILLARY_DISTANCE = 64)
-FRL.add_to_roster("014_03")
+FRL = fd.Ensemble(dir_source = FRL_folder, file_bookends = bookends, INTER_PUPILLARY_DISTANCE = 64)
 FRL.add_to_roster("122_03")
+FRL.add_to_roster("014_03")
 FRL.display_roster()
 FRL.clip_roster_margins(margins=(1/6, 1/4))
 FRL.display_roster()
@@ -75,33 +74,33 @@ plt.imshow(montage, cmap="gray"); plt.show()
 
 
 # Spaced out features -----------------------------------------------
-CreativeCommons.empty_roster()
-CreativeCommons.add_to_roster("premium/men/corey-haim")
-CreativeCommons.add_to_roster("premium/men/eric-mccormack")
-CreativeCommons.clip_roster_margins(margins=(1/6, 1/4))
-CreativeCommons.roster_space_out(scale=1.8)
-CreativeCommons.display_roster(include="features")
+FRL.empty_roster()
+FRL.add_to_roster("122_03")
+FRL.add_to_roster("014_03")
+FRL.clip_roster_margins(margins=(1/6, 1/4))
+FRL.roster_space_out(scale=1.8)
+FRL.display_roster(include="features")
 
 # Double face illusion ----------------------------------------------
-CreativeCommons.empty_roster()
-CreativeCommons.add_to_roster("premium/men/corey-haim")
-CreativeCommons.add_to_roster("premium/men/eric-mccormack")
-CreativeCommons.clip_roster_margins(margins=(1/6, 1/4))
-CreativeCommons.roster_double_face()
-CreativeCommons.display_roster(include="features")
+FRL.empty_roster()
+FRL.add_to_roster("122_03")
+FRL.add_to_roster("014_03")
+FRL.clip_roster_margins(margins=(1/6, 1/4))
+FRL.roster_double_face()
+FRL.display_roster(include="features")
 
 
 # *******************************************************************
 # Face montage demo (advanced)
 # *******************************************************************
-CreativeCommons.empty_roster()
-CreativeCommons.add_to_roster("premium/men/corey-haim")
-CreativeCommons.add_to_roster("premium/men/eric-mccormack")
-CreativeCommons.clip_roster_margins(margins=(1/6, 1/4))
+FRL.empty_roster()
+FRL.add_to_roster("124_03")
+FRL.add_to_roster("014_03")
+FRL.clip_roster_margins(margins=(1/6, 1/4))
 
 # Needed for advanced demo
 name, img, ROI, F, SHAPE = [], [], [], [], []
-for face in CreativeCommons.Roster:
+for face in FRL.Roster:
     name.append(face.name)
     img.append(face.img)
     ROI.append(face.ROI)
@@ -121,7 +120,7 @@ icx = int(shift.center_index(SHAPE[0][1]))
 cx = round(pixel_cols/2)
 for row in range(2):
     cy = icy + SHAPE[0][0]*row
-    for f in range(CreativeCommons.NUM_FEATURES):
+    for f in range(FRL.NUM_FEATURES):
         roof += shift.tile_placement(CF[:,:,f], shape_out, (cx, cy))
 
 plt.imshow(shift.max_stretch_original_0_is_127(roof), cmap="gray"); plt.show() # image_as_uint8()
