@@ -8,7 +8,7 @@ import fad as fd
 import fad.features.shift_features as shift
 
 
-HERE = Path.cwd()
+HERE = Path(__file__).resolve().parent
 CCFaceFolder = HERE.parent / "align" / "1_basic" / "faces"
 FRLFaceFolder = HERE / "FRL-LS"
 
