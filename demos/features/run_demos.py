@@ -45,7 +45,12 @@ Face0_Thatcher = FRL.Roster[do_face].F
 row0 = np.c_[Face0_Original, Face0_Thatcher]
 row1 = np.c_[shift.rotate_180(Face0_Original), shift.rotate_180(Face0_Thatcher)]
 montage = np.r_[row0, row1]
-plt.imshow(montage, cmap="gray"); plt.show()
+plt.figure(figsize = (6,6)) 
+plt.tick_params(left = False, right = False , labelleft = False , 
+                labelbottom = False, bottom = False)
+plt.imshow(montage, cmap="gray")
+plt.savefig("fig-thatcher.png")
+plt.show()
 
 # Chimeric face -----------------------------------------------------
 bookends = ("","jpg")
