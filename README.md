@@ -2,10 +2,6 @@ Automatic Face Alignment (AFA)
 ================
 Carl M. Gaspar & Oliver G.B. Garrod
 
-<!-- A[<a href='demos/align/1_basic/README.md'>Align</a>] -->
-<!-- click A "SourCherries/fad/blob/main/demos/align/1_basic/README.md" -->
-<!-- A{{Align}}
-click A "https://github.com/SourCherries/fad/blob/main/demos/align/1_basic/README.md -->
 ```mermaid
     graph TD;
         B[an <b>important</b> <a href='http://google.com'>link</a>]
@@ -14,10 +10,18 @@ click A "https://github.com/SourCherries/fad/blob/main/demos/align/1_basic/READM
 
         C[<img src='demos/align/1_basic/collage_aligned.png' width='40' height='40' />]
 
-        A-->B;
-        A-->C;
-        B-->D;
-        C-->D;    
+    align [label="Align", URL="https://github.com/SourCherries/fad/blob/main/demos/align/1_basic/README.md"]
+
+    "Original face photos"
+    "Original face photos" -> align
+    align
+    align -> "Window"
+    align -> "Morph/window"
+    align -> "Features"
+    "Features"
+    "Features" -> "Thatcher"
+    "Features" -> "Chimera"
+    "Features" -> "Other"
 ```
 
 <!-- <svg width="100" height="100">
