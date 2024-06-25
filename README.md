@@ -6,22 +6,29 @@ Carl M. Gaspar & Oliver G.B. Garrod
     graph TD;
         B[an <b>important</b> <a href='http://google.com'>link</a>]
 
+        original[Original face photos]
+
         align[<a href='https://github.com/SourCherries/fad/blob/main/demos/align/1_basic/README.md'>Align</a>]
 
-        C[<img src='demos/align/1_basic/collage_aligned.png' width='40' height='40' />]
+        window[<a href='https://github.com/SourCherries/fad/blob/main/demos/align/1_basic/README.md#windowing'>Window</a>]
 
-    calign [label="Align", URL="https://github.com/SourCherries/fad/blob/main/demos/align/1_basic/README.md"]
+        morph[<a href='https://github.com/SourCherries/fad/blob/main/demos/align/2_morph/README.md'>Morph</a>]
 
-    "Original face photos"
-    "Original face photos" -> align
-    align
-    align -> "Window"
-    align -> "Morph/window"
-    align -> "Features"
-    "Features"
-    "Features" -> "Thatcher"
-    "Features" -> "Chimera"
-    "Features" -> "Other"
+        features[<a href='https://github.com/SourCherries/fad/tree/main/demos/features'>Features</a>]
+
+        thatcher[<a href='https://github.com/SourCherries/fad/tree/main/demos/features/figs/thatcher.png'>Thatcher</a>]
+
+        chimera[<a href='https://github.com/SourCherries/fad/tree/main/demos/features/figs/chimera.png'>Chimera</a>]        
+
+        other[Other]
+
+        original --> align
+        align --> window
+        align --> morph
+        align -> features
+        features -> thatcher
+        features -> chimera
+        features -> other
 ```
 
 <!-- <svg width="100" height="100">
