@@ -6,11 +6,11 @@ Carl M. Gaspar & Oliver G.B. Garrod
     graph TD;
         B[an <b>important</b> <a href='http://google.com'>link</a>]
 
-        A[<a href='https://github.com/SourCherries/fad/blob/main/demos/align/1_basic/README.md'>Align</a>]
+        align[<a href='https://github.com/SourCherries/fad/blob/main/demos/align/1_basic/README.md'>Align</a>]
 
         C[<img src='demos/align/1_basic/collage_aligned.png' width='40' height='40' />]
 
-    align [label="Align", URL="https://github.com/SourCherries/fad/blob/main/demos/align/1_basic/README.md"]
+    calign [label="Align", URL="https://github.com/SourCherries/fad/blob/main/demos/align/1_basic/README.md"]
 
     "Original face photos"
     "Original face photos" -> align
