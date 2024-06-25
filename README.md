@@ -4,6 +4,8 @@ Carl M. Gaspar & Oliver G.B. Garrod
 
 ![](overview.svg)
 
+<img src="overview.png" usemap="#overview" />
+
 #### You have lots of photos of faces like this:
 ![](demos/align/1_basic/collage_originals.png)
 
