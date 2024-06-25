@@ -3,11 +3,12 @@ Automatic Face Alignment (AFA)
 Carl M. Gaspar & Oliver G.B. Garrod
 
 ```mermaid
-  graph TD;
-      A-->B;
-      A-->C;
-      B-->D;
-      C-->D;    
+    graph TD;
+        B[an <b>important</b> <a href='http://google.com'>link</a>]
+        A-->B;
+        A-->C;
+        B-->D;
+        C-->D;    
 ```
 
 <!-- <svg width="100" height="100">
