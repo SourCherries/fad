@@ -25,10 +25,10 @@ Carl M. Gaspar & Oliver G.B. Garrod
         original --> align
         align --> window
         align --> morph
-        align -> features
-        features -> thatcher
-        features -> chimera
-        features -> other
+        align --> features
+        features --> thatcher
+        features --> chimera
+        features --> other
 ```
 
 <!-- <svg width="100" height="100">
