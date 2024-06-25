@@ -2,11 +2,13 @@ Automatic Face Alignment (AFA)
 ================
 Carl M. Gaspar & Oliver G.B. Garrod
 
-{{< svg "overview.svg" >}}
+{{< figure src="overview.svg" >}}
 
-![](overview.svg)
+{{ readFile "overview.svg" | safeHTML }}
 
-<img src="overview.png" usemap="#overview" />
+<!-- ![](overview.svg)
+
+<img src="overview.png" usemap="#overview" /> -->
 
 #### You have lots of photos of faces like this:
 ![](demos/align/1_basic/collage_originals.png)
