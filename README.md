@@ -2,10 +2,15 @@ Automatic Face Alignment (AFA)
 ================
 Carl M. Gaspar & Oliver G.B. Garrod
 
+<!-- A[<a href='demos/align/1_basic/README.md'>Align</a>] -->
+
 ```mermaid
     graph TD;
         B[an <b>important</b> <a href='http://google.com'>link</a>]
-        A[<a href='demos/align/1_basic/README.md'>Align</a>]
+
+        A{{Align}}
+        click A "SourCherries/fad/blob/main/demos/align/1_basic/README.md"
+
         A-->B;
         A-->C;
         B-->D;
