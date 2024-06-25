@@ -1,0 +1,19 @@
+digraph mygraph {
+    fontname="Helvetica,Arial,sans-serif"
+    node [fontname="Helvetica,Arial,sans-serif"]
+    edge [fontname="Helvetica,Arial,sans-serif"]
+    node [shape=box];
+
+    align [label="Align", URL="demos/align/1_basic/README.md"]
+
+    "Original face photos"
+    "Original face photos" -> align
+    align
+    align -> "Window"
+    align -> "Morph/window"
+    align -> "Features"
+    "Features"
+    "Features" -> "Thatcher"
+    "Features" -> "Chimera"
+    "Features" -> "Other"
+}
