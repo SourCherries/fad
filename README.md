@@ -3,19 +3,19 @@ Automatic Face Alignment (AFA)
 Carl M. Gaspar & Oliver G.B. Garrod
 
 #### You have lots of photos of faces like this:
-![](demos/demo_1_alignment/collage_originals.png)
+![](demos/align/1_basic/collage_originals.png)
 
 #### But you want to line up all of the faces like this:
-![](demos/demo_1_alignment/collage_aligned.png)
+![](demos/align/1_basic/collage_aligned.png)
 
 <!-- #### Specifically, the locations of facial features should overlap across images, as you can confirm here: -->
 
-<!-- ![](demos/demo_1_alignment/animation_aligned.gif) -->
+<!-- ![](demos/align/1_basic/animation_aligned.gif) -->
 <!-- <p align="center" width="100%">
-    <img width="33%" src="demos/demo_1_alignment/animation_aligned.gif">
+    <img width="33%" src="demos/align/1_basic/animation_aligned.gif">
 </p> -->
 #### Perhaps you would also like to window the faces to show only inner facial features like this:
-![](demos/demo_1_alignment/collage_aligned_windowed.png)
+![](demos/align/1_basic/collage_aligned_windowed.png)
 
 #### All of the above can be done using AFA like this:
 ```python
@@ -27,7 +27,7 @@ aligned_path = afa.align_procrustes(faces_path)
 afa.get_landmarks(aligned_path)
 the_aperture, aperture_path = afa.place_aperture(aligned_path)
 ```
-To better understand how to write a script for your specific purposes, we direct you to [demo 1](demos/demo_1_alignment/README.md). [Demo 1](demos/demo_1_alignment/README.md) also describes how AFA alignment works.
+To better understand how to write a script for your specific purposes, we direct you to [demo 1](demos/align/1_basic/README.md). [Demo 1](demos/align/1_basic/README.md) also describes how AFA alignment works.
 
 All of these functions depend on reliable detection of facial landmarks, which is provided by the [DLIB](http://dlib.net) library. Alignment is based on generalized Procrustes analysis (GPA), which extensively unit tested.
 
@@ -38,8 +38,8 @@ AFA provides functions for two types of face-warping manipulations common in fac
 
 ### Morphing between faces
 <!-- Here we gradually morph between [Choi Min-sik](https://en.wikipedia.org/wiki/Choi_Min-sik) (on the far left) and [Sarah Silverman](https://en.wikipedia.org/wiki/Sarah_Silverman) (on the far right) in equal 9 steps:
-![](demos/demo_2_morphing/figure-demo-2.png) -->
-To learn how to do this please see [demo 2](demos/demo_2_morphing/README.md).
+![](demos/align/2_morph/figure-demo-2.png) -->
+To learn how to do this please see [demo 2](demos/align/2_morph/README.md).
 
 
 
@@ -49,7 +49,7 @@ To learn how to do this please see [demo 2](demos/demo_2_morphing/README.md).
 Prior to averaging, we can also use AFA to warp each image of Tony Blair to match the average of landmark positions across each instance of Tony Blair. This enhanced average is shown on the far right.
 
 <p align="center" width="100%">
-    <img width="33%" src="demos/demo_3_averaging/comparison_average_types.png">
+    <img width="33%" src="demos/align/3_average/comparison_average_types.png">
 </p> -->
 
 <!-- This **enhanced facial average** was first demonstrated by
@@ -60,7 +60,7 @@ We used the same photos of Tony Blair as they used (in their Figure 3).
 
 Manual landmark selection was required in Burton et al. (2005), whereas AFA automated the entire process in our demo. -->
 
-To learn how to do this please see [demo 3](demos/demo_3_averaging/README.md).
+To learn how to do this please see [demo 3](demos/align/3_average/README.md).
 
 
 # Setup
