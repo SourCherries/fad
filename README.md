@@ -9,7 +9,7 @@ Carl M. Gaspar & Oliver G.B. Garrod
         B[an <b>important</b> <a href='http://google.com'>link</a>]
 
         A{{Align}}
-        click A "demos/align/1_basic/README.md"
+        click A "https://github.com/SourCherries/fad/blob/main/demos/align/1_basic/README.md"
 
         A-->B;
         A-->C;
