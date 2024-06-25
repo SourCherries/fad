@@ -312,10 +312,11 @@ class Ensemble:
                 face_ = Face(name=name,img=img,ROI=ROI,F=F,SHAPE=SHAPE,feature_labels=feature_labels)
                 self.Roster[fi] = face_
 
-    def display_roster(self, include="both"):
+    def display_roster(self, include="both", show=True, title=True):
         assert include in ["both","source","features"]
         if (self.ALIGNED == False) or (self.WRFF == False):
             include = "source"
+        fh = []
         for fi, face in enumerate(self.Roster):
             name = face.name
             img = face.img
@@ -331,9 +332,16 @@ class Ensemble:
                 montage = img
             else:
                 montage = F
-            plt.imshow(montage, cmap="gray")
-            plt.title(name)
-            plt.show()
+            fig, ax = plt.subplots()
+            ax.imshow(montage, cmap="gray")
+            ax.tick_params(left = False, right = False , labelleft = False , 
+                                        labelbottom = False, bottom = False)
+            if title:
+                plt.title(name)
+            fh.append(fig)
+            if show:
+                plt.show()
+        return fh
 
     # Roster effects
     def roster_thatcher(self):
