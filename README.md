@@ -4,8 +4,6 @@ Carl M. Gaspar & Oliver G.B. Garrod
 
 ```mermaid
     graph TD;
-        B[an <b>important</b> <a href='http://google.com'>link</a>]
-
         original[Original face photos]
 
         align[<a href='https://github.com/SourCherries/fad/blob/main/demos/align/1_basic/README.md'>Align</a>]
