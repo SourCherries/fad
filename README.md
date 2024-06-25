@@ -6,6 +6,8 @@ Carl M. Gaspar & Oliver G.B. Garrod
 
 {{ readFile "overview.svg" | safeHTML }}
 
+<img src="overview.svg"/>
+
 <!-- ![](overview.svg)
 
 <img src="overview.png" usemap="#overview" /> -->
