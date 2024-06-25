@@ -3,6 +3,7 @@ import copy
 
 import matplotlib.pyplot as plt
 import numpy as np
+from skimage.io import imsave
 
 import fad as fd
 import fad.features.shift_features as shift
@@ -10,7 +11,12 @@ import fad.features.shift_features as shift
 
 HERE = Path(__file__).resolve().parent
 FRL_folder = HERE / "FRL-LS"
-
+stim_folder = HERE / "stimuli"
+fig_folder = HERE/ "figs"
+if not stim_folder.exists():
+    stim_folder.mkdir(parents=False, exist_ok=False)
+if not fig_folder.exists():
+    fig_folder.mkdir(parents=False, exist_ok=False)    
 
 # Basic usage
 bookends = ("","jpg")
@@ -20,8 +26,15 @@ FRL.add_to_roster("124_03")
 FRL.add_to_roster("014_03")
 FRL.clip_roster_margins(margins=(1/6, 1/4))
 FRL.display_roster()
-FRL_original = copy.deepcopy(FRL)
 
+FRL_original = copy.deepcopy(FRL)
+FRL_original.combine_roster_features()
+for i, face in enumerate(FRL_original.Roster):
+    file_raw = "raw-" + str(i) + ".png"
+    file_feat = "features-" + str(i) + ".png"
+    imsave(stim_folder / file_raw, face.img, check_contrast=False)
+    imsave(stim_folder / file_feat, face.F, check_contrast=False)
+    
 
 # *******************************************************************
 # Feature manipulation demos
@@ -39,17 +52,16 @@ FRL.display_roster()
 # | inverted-normal | inverted-Thatcher |
 #  -------------------------------------
 do_face = 0
-FRL_original.combine_roster_features()
 Face0_Original = FRL_original.Roster[do_face].F
 Face0_Thatcher = FRL.Roster[do_face].F
 row0 = np.c_[Face0_Original, Face0_Thatcher]
 row1 = np.c_[shift.rotate_180(Face0_Original), shift.rotate_180(Face0_Thatcher)]
 montage = np.r_[row0, row1]
-plt.figure(figsize = (6,6)) 
+plt.figure(figsize = (6,6))
 plt.tick_params(left = False, right = False , labelleft = False , 
                 labelbottom = False, bottom = False)
 plt.imshow(montage, cmap="gray")
-plt.savefig("fig-thatcher.png")
+plt.savefig(fig_folder / "thatcher.png")
 plt.show()
 
 # Chimeric face -----------------------------------------------------
@@ -75,8 +87,11 @@ originals = []
 for face in FRL.Roster:
     originals.append(face.F)
 montage = np.c_[originals[0], originals[1], chimera]
-plt.imshow(montage, cmap="gray"); plt.show()
-
+plt.imshow(montage, cmap="gray")
+plt.tick_params(left = False, right = False , labelleft = False , 
+                labelbottom = False, bottom = False)
+plt.savefig(fig_folder / "chimera.png")
+plt.show()
 
 # Spaced out features -----------------------------------------------
 FRL.empty_roster()
@@ -84,7 +99,10 @@ FRL.add_to_roster("122_03")
 FRL.add_to_roster("014_03")
 FRL.clip_roster_margins(margins=(1/6, 1/4))
 FRL.roster_space_out(scale=1.8)
-FRL.display_roster(include="features")
+fh = FRL.display_roster(include="features", show=False, title=False)
+for i, fig in enumerate(fh):
+    fig.savefig(fig_folder / ("spaced-out-" + str(i) + ".png"))
+    plt.show()
 
 # Double face illusion ----------------------------------------------
 FRL.empty_roster()
@@ -92,7 +110,10 @@ FRL.add_to_roster("122_03")
 FRL.add_to_roster("014_03")
 FRL.clip_roster_margins(margins=(1/6, 1/4))
 FRL.roster_double_face()
-FRL.display_roster(include="features")
+fh = FRL.display_roster(include="features", show=False, title=False)
+for i, fig in enumerate(fh):
+    fig.savefig(fig_folder / ("double-space-" + str(i) + ".png"))
+    plt.show()
 
 
 # *******************************************************************
@@ -128,8 +149,9 @@ for row in range(2):
     for f in range(FRL.NUM_FEATURES):
         roof += shift.tile_placement(CF[:,:,f], shape_out, (cx, cy))
 
-plt.imshow(shift.max_stretch_original_0_is_127(roof), cmap="gray"); plt.show() # image_as_uint8()
-
+plt.imshow(shift.max_stretch_original_0_is_127(roof), cmap="gray")
+plt.savefig(fig_folder / "fat-face.png")
+plt.show()
 
 # End
 # -------------------------------------------------------------------
