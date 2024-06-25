@@ -4,12 +4,13 @@ Carl M. Gaspar & Oliver G.B. Garrod
 
 <!-- A[<a href='demos/align/1_basic/README.md'>Align</a>] -->
 <!-- click A "SourCherries/fad/blob/main/demos/align/1_basic/README.md" -->
+<!-- A{{Align}}
+click A "https://github.com/SourCherries/fad/blob/main/demos/align/1_basic/README.md -->
 ```mermaid
     graph TD;
         B[an <b>important</b> <a href='http://google.com'>link</a>]
 
-        A{{Align}}
-        click A "https://github.com/SourCherries/fad/blob/main/demos/align/1_basic/README.md"
+        A[<a href='https://github.com/SourCherries/fad/blob/main/demos/align/1_basic/README.md'>Align</a>]
 
         A-->B;
         A-->C;
