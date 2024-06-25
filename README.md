@@ -5,6 +5,7 @@ Carl M. Gaspar & Oliver G.B. Garrod
 ```mermaid
     graph TD;
         B[an <b>important</b> <a href='http://google.com'>link</a>]
+        A[<a href='demos/align/1_basic/README.md'>Align</a>]
         A-->B;
         A-->C;
         B-->D;
