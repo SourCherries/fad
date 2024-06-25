@@ -12,6 +12,8 @@ click A "https://github.com/SourCherries/fad/blob/main/demos/align/1_basic/READM
 
         A[<a href='https://github.com/SourCherries/fad/blob/main/demos/align/1_basic/README.md'>Align</a>]
 
+        C[<img src='demos/align/1_basic/collage_aligned.png' />]
+
         A-->B;
         A-->C;
         B-->D;
