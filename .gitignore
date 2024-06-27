@@ -75,6 +75,11 @@ venv.bak/
 demos/align/1_basic/faces-aligned/*.jpg
 demos/align/1_basic/faces-aligned-windowed/*.jpg
 
+results/friends-aligned-windowed/*png
+results/friends-aligned-wrff/*png
+results/friends-aligned/*jpg
+results/friends/*jpg
+
 results/KUFD-DC/*jpg
 results/KUFD-ID/*jpg
 
