@@ -89,12 +89,12 @@ for s in range(nscale):
     for o in orient[::2]:
         fd = np.fft.fftshift(ffilters[:,:,s,o])
         ax[0].contour(X, Y, fd, levels=np.array([.5]), colors=C[s])
-        ax[0].contour(X, Y, np.flip(fd,axis=(0,1)), levels=np.array([.5]), colors=C[s])
+        ax[0].contour(X, Y, np.flip(fd,axis=(0,1)), levels=np.array([.5]), colors=C[s], alpha=.2)
 for s in range(nscale):
     for o in orient[1::2]:
         fd = np.fft.fftshift(ffilters[:,:,s,o])
         ax[1].contour(X, Y, fd, levels=np.array([.5]), colors=C[s])
-        ax[1].contour(X, Y, np.flip(fd,axis=(0,1)), levels=np.array([.5]), colors=C[s])
+        ax[1].contour(X, Y, np.flip(fd,axis=(0,1)), levels=np.array([.5]), colors=C[s], alpha=.2)
 ax[0].set_aspect("equal")
 ax[1].set_aspect("equal")
 ax[0].tick_params(left = False, right = False , labelleft = False , 
@@ -103,6 +103,7 @@ ax[1].tick_params(left = False, right = False , labelleft = False ,
                   labelbottom = False, bottom = False)
 plt.show()
 fig.savefig("method-wrff-wavelets-sf.pdf")
+fig.savefig("method-wrff-wavelets-sf.png")
 
 
 # End
