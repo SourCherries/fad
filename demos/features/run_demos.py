@@ -18,12 +18,14 @@ if not stim_folder.exists():
 if not fig_folder.exists():
     fig_folder.mkdir(parents=False, exist_ok=False)    
 
+ID = ["122_03", "014_03"]  # 124_03
+
 # Basic usage
 bookends = ("","jpg")
 FRL = fd.Ensemble(dir_source = FRL_folder, file_bookends = bookends, INTER_PUPILLARY_DISTANCE = 64)
 FRL.list_faces()
-FRL.add_to_roster("124_03")
-FRL.add_to_roster("014_03")
+FRL.add_to_roster(ID[0])
+FRL.add_to_roster(ID[1])
 FRL.clip_roster_margins(margins=(1/6, 1/4))
 FRL.display_roster()
 
@@ -68,11 +70,19 @@ plt.show()
 bookends = ("","jpg")
 
 FRL = fd.Ensemble(dir_source = FRL_folder, file_bookends = bookends, INTER_PUPILLARY_DISTANCE = 64)
-FRL.add_to_roster("122_03")
-FRL.add_to_roster("014_03")
+FRL.add_to_roster(ID[0])
+FRL.add_to_roster(ID[1])
 FRL.display_roster()
 FRL.clip_roster_margins(margins=(1/6, 1/4))
 FRL.display_roster()
+
+feature_id = {"left_eyebrow": 0,
+              "right_eyebrow": 0,
+              "left_eye": 1,
+              "right_eye": 1,
+              "nose": 0,
+              "mouth_outline": 0}
+chimera_a = FRL.roster_chimeric(feature_id)["img"]
 
 feature_id = {"left_eyebrow": 1,
               "right_eyebrow": 1,
@@ -80,34 +90,43 @@ feature_id = {"left_eyebrow": 1,
               "right_eye": 0,
               "nose": 1,
               "mouth_outline": 1}
+chimera_b = FRL.roster_chimeric(feature_id)["img"]
 
-chimera = FRL.roster_chimeric(feature_id)["img"]
-FRL.combine_roster_features()
-originals = []
-for face in FRL.Roster:
-    originals.append(face.F)
-montage = np.c_[originals[0], originals[1], chimera]
-plt.imshow(montage, cmap="gray")
-plt.tick_params(left = False, right = False , labelleft = False , 
-                labelbottom = False, bottom = False)
-plt.savefig(fig_folder / "chimera.png")
-plt.show()
+imsave(stim_folder / "chimera-a.png", chimera_a, check_contrast=False)
+imsave(stim_folder / "chimera-b.png", chimera_b, check_contrast=False)
+
+# FRL.combine_roster_features()
+# originals = []
+# for face in FRL.Roster:
+#     originals.append(face.F)
+# montage = np.c_[originals[0], originals[1], chimera]
+# plt.imshow(montage, cmap="gray")
+# plt.tick_params(left = False, right = False , labelleft = False , 
+#                 labelbottom = False, bottom = False)
+# plt.savefig(fig_folder / "chimera.png")
+# plt.show()
 
 # Spaced out features -----------------------------------------------
 FRL.empty_roster()
-FRL.add_to_roster("122_03")
-FRL.add_to_roster("014_03")
+FRL.add_to_roster(ID[0])
+FRL.add_to_roster(ID[1])
 FRL.clip_roster_margins(margins=(1/6, 1/4))
 FRL.roster_space_out(scale=1.8)
+FRL.clip_roster_margins(margins=(1/6, 1/4))
 fh = FRL.display_roster(include="features", show=False, title=False)
 for i, fig in enumerate(fh):
     fig.savefig(fig_folder / ("spaced-out-" + str(i) + ".png"))
     plt.show()
 
+FRL.combine_roster_features()
+for i, face in enumerate(FRL.Roster):
+    file_feat = "exploded-" + str(i) + ".png"    
+    imsave(stim_folder / file_feat, face.F, check_contrast=False)
+
 # Double face illusion ----------------------------------------------
 FRL.empty_roster()
-FRL.add_to_roster("122_03")
-FRL.add_to_roster("014_03")
+FRL.add_to_roster(ID[0])
+FRL.add_to_roster(ID[1])
 FRL.clip_roster_margins(margins=(1/6, 1/4))
 FRL.roster_double_face()
 fh = FRL.display_roster(include="features", show=False, title=False)
@@ -115,13 +134,17 @@ for i, fig in enumerate(fh):
     fig.savefig(fig_folder / ("double-space-" + str(i) + ".png"))
     plt.show()
 
+FRL.combine_roster_features()
+for i, face in enumerate(FRL.Roster):
+    file_feat = "double-" + str(i) + ".png"    
+    imsave(stim_folder / file_feat, face.F, check_contrast=False)
 
 # *******************************************************************
 # Face montage demo (advanced)
 # *******************************************************************
 FRL.empty_roster()
-FRL.add_to_roster("124_03")
-FRL.add_to_roster("014_03")
+FRL.add_to_roster(ID[0])
+FRL.add_to_roster(ID[1])
 FRL.clip_roster_margins(margins=(1/6, 1/4))
 
 # Needed for advanced demo
