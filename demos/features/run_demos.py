@@ -9,6 +9,13 @@ import fad as fd
 import fad.features.shift_features as shift
 
 
+# Write individual Thatcher faces X2    🚀
+# Add composite  X2 -- halves swapping
+# Add feature spacing X2  -- IPD
+
+# 2 figures
+#   raw - wrff - composite  - whole_part    - thatcher
+#   raw - wrff - spacing    - crowding      - double_face
 HERE = Path(__file__).resolve().parent
 FRL_folder = HERE / "FRL-LS"
 stim_folder = HERE / "stimuli"
@@ -66,6 +73,10 @@ plt.imshow(montage, cmap="gray")
 plt.savefig(fig_folder / "thatcher.png")
 plt.show()
 
+for i, face in enumerate(FRL.Roster):
+    file_thatcher = "thatcher-" + str(i) + ".png"    
+    imsave(stim_folder / file_thatcher, face.F, check_contrast=False)
+
 # Chimeric face -----------------------------------------------------
 bookends = ("","jpg")
 
@@ -92,8 +103,8 @@ feature_id = {"left_eyebrow": 1,
               "mouth_outline": 1}
 chimera_b = FRL.roster_chimeric(feature_id)["img"]
 
-imsave(stim_folder / "chimera-a.png", chimera_a, check_contrast=False)
-imsave(stim_folder / "chimera-b.png", chimera_b, check_contrast=False)
+imsave(stim_folder / "whole-part-0.png", chimera_a, check_contrast=False)
+imsave(stim_folder / "whole-part-1.png", chimera_b, check_contrast=False)
 
 # FRL.combine_roster_features()
 # originals = []
