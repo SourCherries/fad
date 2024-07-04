@@ -10,7 +10,7 @@ import fad.features.shift_features as shift
 
 
 # Write individual Thatcher faces X2    🚀
-# Add composite  X2 -- halves swapping
+# Add composite  X2 -- halves swapping  🚀
 # Add feature spacing X2  -- IPD
 
 # 2 figures
@@ -77,7 +77,7 @@ for i, face in enumerate(FRL.Roster):
     file_thatcher = "thatcher-" + str(i) + ".png"    
     imsave(stim_folder / file_thatcher, face.F, check_contrast=False)
 
-# Chimeric face -----------------------------------------------------
+# Whole-part faces --------------------------------------------------
 bookends = ("","jpg")
 
 FRL = fd.Ensemble(dir_source = FRL_folder, file_bookends = bookends, INTER_PUPILLARY_DISTANCE = 64)
@@ -106,16 +106,27 @@ chimera_b = FRL.roster_chimeric(feature_id)["img"]
 imsave(stim_folder / "whole-part-0.png", chimera_a, check_contrast=False)
 imsave(stim_folder / "whole-part-1.png", chimera_b, check_contrast=False)
 
-# FRL.combine_roster_features()
-# originals = []
-# for face in FRL.Roster:
-#     originals.append(face.F)
-# montage = np.c_[originals[0], originals[1], chimera]
-# plt.imshow(montage, cmap="gray")
-# plt.tick_params(left = False, right = False , labelleft = False , 
-#                 labelbottom = False, bottom = False)
-# plt.savefig(fig_folder / "chimera.png")
-# plt.show()
+
+# Composite faces ---------------------------------------------------
+feature_id = {"left_eyebrow": 0,
+              "right_eyebrow": 0,
+              "left_eye": 0,
+              "right_eye": 0,
+              "nose": 1,
+              "mouth_outline": 1}
+chimera_a = FRL.roster_chimeric(feature_id)["img"]
+
+feature_id = {"left_eyebrow": 1,
+              "right_eyebrow": 1,
+              "left_eye": 1,
+              "right_eye": 1,
+              "nose": 0,
+              "mouth_outline": 0}
+chimera_b = FRL.roster_chimeric(feature_id)["img"]
+
+imsave(stim_folder / "composite-0.png", chimera_a, check_contrast=False)
+imsave(stim_folder / "composite-1.png", chimera_b, check_contrast=False)
+
 
 # Spaced out features -----------------------------------------------
 FRL.empty_roster()
@@ -186,6 +197,51 @@ for row in range(2):
 plt.imshow(shift.max_stretch_original_0_is_127(roof), cmap="gray")
 plt.savefig(fig_folder / "fat-face.png")
 plt.show()
+
+
+# *******************************************************************
+# Beta
+# *******************************************************************
+
+# IPD spacing -------------------------------------------------------
+
+scale = 1.2
+
+i = 0
+F_, ROI_ = F[i], ROI[i]
+assert F_.shape == ROI_.shape
+assert type(scale) is float
+
+new_rows, new_cols, NUM_FEATURES = F_.shape
+shape_out = (F_.shape[0], F_.shape[1])
+Fn = np.zeros(F_.shape)
+ROIn = np.zeros(F_.shape)
+
+LB = shift.feature_center(ROI_[:,:,0])
+LE = shift.feature_center(ROI_[:,:,2])
+RB = shift.feature_center(ROI_[:,:,1])
+RE = shift.feature_center(ROI_[:,:,3])
+ipd = ((LE-RE)**2).sum()**(1/2)
+shift_eye_pixels = ipd*(scale-1)/2
+CE = (LE+RE)/2
+CB = (LB+RB)/2
+
+LE_ = (LE - CE)*((scale-1)/2 + 1) + CE
+RE_ = (RE - CE)*((scale-1)/2 + 1) + CE
+LB_ = (LB + (LE_-LE)).astype(int)
+RB_ = (RB + (RE_-RE)).astype(int)
+
+feature = 0
+tile = F_[:,:,feature].astype(float)
+tile_centered = shift.shift_xy_to_image_center(tile, LB)
+tile_centered -= tile_centered[0,0]
+Fn[:,:,feature] = shift.tile_placement(tile_centered, shape_out, LB_)
+
+feature = 1
+tile = F_[:,:,feature].astype(float)
+tile_centered = shift.shift_xy_to_image_center(tile, RB)
+tile_centered -= tile_centered[0,0]
+Fn[:,:,feature] = shift.tile_placement(tile_centered, shape_out, RB_)
 
 # End
 # -------------------------------------------------------------------
