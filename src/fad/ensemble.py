@@ -17,7 +17,7 @@ import matplotlib.pyplot as plt
 
 # import alignfaces as afa
 # import .align as afa
-from .align.make_aligned_faces import get_source_files, get_landmarks, align_procrustes
+from .align.make_aligned_faces import get_source_files, get_landmarks, align_procrustes, place_aperture
 from .align.make_files import clone_directory_tree
 
 from .features.filters import face_filters, get_eo, eo_montage
@@ -63,15 +63,21 @@ class Ensemble:
     dir_source: Path
     file_bookends: FileBookends
     make_all_features: bool = False
+    make_windowed_faces: bool = False
     dir_aligned: Path | None = None
+    dir_windowed: Path | None = None
     dir_wrff: Path | None = None
     SOURCE: bool  | None = None
     ALIGNED: bool  | None = None
+    WINDOW: bool | None = None
     WRFF: bool | None = None
     adjust_size: Literal['set_eye_distance', 'set_image_width','set_image_height', 'default'] | None = None
     SHAPE: tuple[int, int]  | None = None       # pixels (height, width)
     INTER_PUPILLARY_DISTANCE: int | None = None # pixels
     
+    # aperture: NDArrayFloat | None = None
+    aperture = "Empty"
+
     # Required for WRFF generation
     landmarks: dict | None = None
     ffilters: NDArrayFloat | None = None    # Fourier filters, dtype('float64')
@@ -86,6 +92,7 @@ class Ensemble:
     def __post_init__(self):
         self.file_extension = str(self.file_bookends[1])
         self.dir_aligned = self.dir_source.parent / (self.dir_source.stem + "-aligned")
+        self.dir_windowed = self.dir_source.parent / (self.dir_source.stem + "-aligned-windowed")
         self.dir_wrff = self.dir_source.parent / (self.dir_source.stem + "-aligned-wrff")
         source_error = prepare_source(self)
         if source_error == None:
@@ -103,12 +110,13 @@ class Ensemble:
                 print(aligned_error)
                 self.ALIGNED = False
                 self.WRFF = False
+                self.WINDOW = False
         else: 
             print(source_error)
             self.SOURCE = False
             self.ALIGNED = False
             self.WRFF = False
-
+            self.WINDOW = False
         # if self.dir_aligned.exists():
         #     self.ALIGNED = True
         # else:
@@ -536,6 +544,15 @@ def prepare_aligned(ens: Ensemble, ipd=None):
             # afa.get_landmarks(aligned_path, file_prefix=pre, file_postfix=post)
             get_landmarks(aligned_path, file_prefix=pre, file_postfix=post)
             aligned_error = None
+            if ens.make_windowed_faces:
+                no_save = False
+                apresults, aperture_path = place_aperture(aligned_path, file_prefix=pre, file_postfix=post, no_save=no_save)
+                assert Path(aperture_path) == ens.dir_windowed                
+            else:
+                no_save = True
+                apresults = place_aperture(aligned_path, file_prefix=pre, file_postfix=post, no_save=no_save)
+            ens.aperture = apresults
+            ens.WINDOW = True
     else:
         # aligned_files = afa.make_files.get_source_files(ens.dir_aligned, pre, post)
         aligned_files = get_source_files(ens.dir_aligned, pre, post)
@@ -558,6 +575,15 @@ def prepare_aligned(ens: Ensemble, ipd=None):
                         # afa.get_landmarks(aligned_path, file_prefix=pre, file_postfix=post)
                         get_landmarks(aligned_path, file_prefix=pre, file_postfix=post)
                         aligned_error = None
+                        if ens.make_windowed_faces:
+                            no_save = False
+                            apresults, aperture_path = place_aperture(aligned_path, file_prefix=pre, file_postfix=post, no_save=no_save)
+                            assert Path(aperture_path) == ens.dir_windowed                
+                        else:
+                            no_save = True
+                            apresults = place_aperture(aligned_path, file_prefix=pre, file_postfix=post, no_save=no_save)
+                        ens.aperture = apresults
+                        ens.WINDOW = True
                 else:
                     landmarks_file = ens.dir_aligned / "landmarks.txt"
                     if not landmarks_file.exists():
