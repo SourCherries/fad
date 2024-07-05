@@ -25,7 +25,7 @@ from .features.roi import get_feature_roi
 from .features.coefficients import select_coefficients_by_feature
 from .features.reconstruct import wrff_progress as reconstruct
 from .features.reconstruct import combine_features
-from .features.shift_features import thatcher_face, space_out_features, double_face_illusion
+from .features.shift_features import thatcher_face, space_out_features, space_out_ipd, double_face_illusion
 
 
 
@@ -378,6 +378,24 @@ class Ensemble:
                 SHAPE_ = SOF.shape[:2]
                 face_ = Face(name=name,img=img,ROI=SOR,F=SOF,SHAPE=SHAPE_,feature_labels=feature_labels)
                 self.Roster[fi] = face_
+
+    def roster_space_ipd(self, scale):
+        if not self.roster_exists():
+            print("Roster is empty.")
+        elif not self.roster_features_separate():
+            print("Roster features already combined.")
+        else:
+            for fi, face in enumerate(self.Roster):
+                name = face.name
+                img = face.img
+                F = face.F
+                ROI = face.ROI
+                feature_labels = face.feature_labels
+                results = space_out_ipd(F, ROI, scale=scale)
+                SOF, SOR = results["F"], results["ROI"]
+                SHAPE_ = SOF.shape[:2]
+                face_ = Face(name=name,img=img,ROI=SOR,F=SOF,SHAPE=SHAPE_,feature_labels=feature_labels)
+                self.Roster[fi] = face_        
 
     def roster_double_face(self, percent_down_shift=None):
         """🚧 checks on number of features in other roster functions 🚧"""

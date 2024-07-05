@@ -204,44 +204,27 @@ plt.show()
 # *******************************************************************
 
 # IPD spacing -------------------------------------------------------
-
-scale = 1.2
-
+scale = 1.5
 i = 0
 F_, ROI_ = F[i], ROI[i]
-assert F_.shape == ROI_.shape
-assert type(scale) is float
+results = shift.space_out_ipd(F_, ROI_, scale)
+Fn = results["F"]
+ROIn = results["ROI"]
 
-new_rows, new_cols, NUM_FEATURES = F_.shape
-shape_out = (F_.shape[0], F_.shape[1])
-Fn = np.zeros(F_.shape)
-ROIn = np.zeros(F_.shape)
+montage = np.r_[F_.sum(axis=2), Fn.sum(axis=2)]
+plt.imshow(montage); plt.show()
 
-LB = shift.feature_center(ROI_[:,:,0])
-LE = shift.feature_center(ROI_[:,:,2])
-RB = shift.feature_center(ROI_[:,:,1])
-RE = shift.feature_center(ROI_[:,:,3])
-ipd = ((LE-RE)**2).sum()**(1/2)
-shift_eye_pixels = ipd*(scale-1)/2
-CE = (LE+RE)/2
-CB = (LB+RB)/2
+montage = np.r_[ROI_.sum(axis=2), ROIn.sum(axis=2)]
+plt.imshow(montage); plt.show()
 
-LE_ = (LE - CE)*((scale-1)/2 + 1) + CE
-RE_ = (RE - CE)*((scale-1)/2 + 1) + CE
-LB_ = (LB + (LE_-LE)).astype(int)
-RB_ = (RB + (RE_-RE)).astype(int)
-
-feature = 0
-tile = F_[:,:,feature].astype(float)
-tile_centered = shift.shift_xy_to_image_center(tile, LB)
-tile_centered -= tile_centered[0,0]
-Fn[:,:,feature] = shift.tile_placement(tile_centered, shape_out, LB_)
-
-feature = 1
-tile = F_[:,:,feature].astype(float)
-tile_centered = shift.shift_xy_to_image_center(tile, RB)
-tile_centered -= tile_centered[0,0]
-Fn[:,:,feature] = shift.tile_placement(tile_centered, shape_out, RB_)
-
+FRL.empty_roster()
+FRL.add_to_roster(ID[0])
+FRL.add_to_roster(ID[1])
+FRL.clip_roster_margins(margins=(1/6, 1/4))
+FRL.roster_space_ipd(scale=1.5)
+FRL.combine_roster_features()
+for i, face in enumerate(FRL.Roster):
+    file_feat = "space-ipd-" + str(i) + ".png"    
+    imsave(stim_folder / file_feat, face.F, check_contrast=False)
 # End
 # -------------------------------------------------------------------

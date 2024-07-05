@@ -110,6 +110,94 @@ def space_out_features(F, ROI, scale, scale_shape=None):
     return {"F": Fn, "ROI": ROIn}
 
 
+def space_out_ipd(F_, ROI_, scale):
+    """
+    Shift each eyes and brows away from midpoint between eyes,
+    as a multiple of original distance.
+
+    INPUT
+        F               ndarray of wavelet features (rows,cols,features)
+        ROI             ndarray of feature regions  (rows,cols,features)
+        scale           spacing multiplier
+
+    OUTPUT
+        Fn              ndarray of wavelet features (rows,cols,features)        
+    """
+    assert F_.shape == ROI_.shape
+    assert type(scale) is float
+    assert len(F_.shape)==3
+    assert F_.shape[2]==6
+    new_rows, new_cols, NUM_FEATURES = F_.shape
+    shape_out = (F_.shape[0], F_.shape[1])
+    Fn = np.zeros(F_.shape)
+    ROIn = np.zeros(F_.shape)
+
+    LB = feature_center(ROI_[:,:,0])
+    LE = feature_center(ROI_[:,:,2])
+    RB = feature_center(ROI_[:,:,1])
+    RE = feature_center(ROI_[:,:,3])
+    ipd = ((LE-RE)**2).sum()**(1/2)
+    shift_eye_pixels = ipd*(scale-1)/2
+    CE = (LE+RE)/2
+    CB = (LB+RB)/2
+
+    LE_ = (LE - CE)*((scale-1)/2 + 1) + CE
+    RE_ = (RE - CE)*((scale-1)/2 + 1) + CE
+    LB_ = (LB + (LE_-LE)).astype(int)
+    RB_ = (RB + (RE_-RE)).astype(int)
+    LE_ = LE_.astype(int)
+    RE_ = RE_.astype(int)
+
+    feature = 0
+    tile = F_[:,:,feature].astype(float)
+    tile_centered = shift_xy_to_image_center(tile, LB)
+    tile_centered -= tile_centered[0,0]
+    Fn[:,:,feature] = tile_placement(tile_centered, shape_out, LB_)
+    roi_centered =  shift_xy_to_image_center(ROI_[:,:,feature], LB)
+    ROIn[:,:,feature] = tile_placement(roi_centered, shape_out, LB_)
+
+    feature = 1
+    tile = F_[:,:,feature].astype(float)
+    tile_centered = shift_xy_to_image_center(tile, RB)
+    tile_centered -= tile_centered[0,0]
+    Fn[:,:,feature] = tile_placement(tile_centered, shape_out, RB_)
+    roi_centered =  shift_xy_to_image_center(ROI_[:,:,feature], RB)
+    ROIn[:,:,feature] = tile_placement(roi_centered, shape_out, RB_)
+
+    feature = 2
+    tile = F_[:,:,feature].astype(float)
+    tile_centered = shift_xy_to_image_center(tile, LE)
+    tile_centered -= tile_centered[0,0]
+    Fn[:,:,feature] = tile_placement(tile_centered, shape_out, LE_)
+    roi_centered =  shift_xy_to_image_center(ROI_[:,:,feature], LE)
+    ROIn[:,:,feature] = tile_placement(roi_centered, shape_out, LE_)
+
+    feature = 3
+    tile = F_[:,:,feature].astype(float)
+    tile_centered = shift_xy_to_image_center(tile, RE)
+    tile_centered -= tile_centered[0,0]
+    Fn[:,:,feature] = tile_placement(tile_centered, shape_out, RE_)
+    roi_centered =  shift_xy_to_image_center(ROI_[:,:,feature], RE)
+    ROIn[:,:,feature] = tile_placement(roi_centered, shape_out, RE_)
+
+    feature = 4
+    tile = F_[:,:,feature].astype(float)
+    corner_value = tile[0,0]
+    Fn[:,:,feature] = tile
+    ROIn[:,:,feature] = ROI_[:,:,feature]
+
+    feature = 5
+    tile = F_[:,:,feature].astype(float)
+    corner_value = tile[0,0]
+    Fn[:,:,feature] = tile
+    ROIn[:,:,feature] = ROI_[:,:,feature]
+
+    for feature in range(4):
+        Fn[:,:,feature] += corner_value
+
+    return {"F": Fn, "ROI": ROIn}
+
+
 def thatcher_face(F, ROI, feature_index):
     """
     INPUT
