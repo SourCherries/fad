@@ -75,8 +75,7 @@ class Ensemble:
     SHAPE: tuple[int, int]  | None = None       # pixels (height, width)
     INTER_PUPILLARY_DISTANCE: int | None = None # pixels
     
-    # aperture: NDArrayFloat | None = None
-    aperture = "Empty"
+    aperture: NDArrayFloat | None = None
 
     # Required for WRFF generation
     landmarks: dict | None = None
@@ -603,6 +602,17 @@ def prepare_aligned(ens: Ensemble, ipd=None):
                         files_rel_aligned_lm =  list(landmarks_aligned)
                         if set(files_rel_aligned) != set(files_rel_aligned_lm):
                             aligned_error = "Aligned image files with landmarks do not match list of files in aligned folder matching requested pattern."
+                        if aligned_error == None:
+                            aligned_path = str(ens.dir_aligned) + os.sep
+                            if ens.make_windowed_faces:
+                                no_save = False
+                                apresults, aperture_path = place_aperture(aligned_path, file_prefix=pre, file_postfix=post, no_save=no_save)
+                                assert Path(aperture_path) == ens.dir_windowed                
+                            else:
+                                no_save = True
+                                apresults = place_aperture(aligned_path, file_prefix=pre, file_postfix=post, no_save=no_save)
+                            ens.aperture = apresults
+                            ens.WINDOW = True                                                        
     return aligned_error
 
 def prepare_features(ens):
