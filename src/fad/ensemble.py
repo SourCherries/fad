@@ -539,7 +539,7 @@ def prepare_aligned(ens: Ensemble, ipd=None):
             adjust_size, size_value = "set_eye_distance", ipd
             input_path = str(ens.dir_source) + os.sep
             # aligned_path = afa.align_procrustes(input_path, adjust_size=adjust_size, size_value=size_value)
-            aligned_path = align_procrustes(input_path, adjust_size=adjust_size, size_value=size_value)
+            aligned_path = align_procrustes(input_path, file_prefix=pre, file_postfix=post, adjust_size=adjust_size, size_value=size_value)
             # afa.get_landmarks(aligned_path, file_prefix=pre, file_postfix=post)
             get_landmarks(aligned_path, file_prefix=pre, file_postfix=post)
             aligned_error = None
@@ -570,7 +570,7 @@ def prepare_aligned(ens: Ensemble, ipd=None):
                         adjust_size, size_value = "set_eye_distance", ipd
                         input_path = str(ens.dir_source) + os.sep
                         # aligned_path = afa.align_procrustes(input_path, adjust_size=adjust_size, size_value=size_value)
-                        aligned_path = align_procrustes(input_path, adjust_size=adjust_size, size_value=size_value)
+                        aligned_path = align_procrustes(input_path, file_prefix=pre, file_postfix=post, adjust_size=adjust_size, size_value=size_value)
                         # afa.get_landmarks(aligned_path, file_prefix=pre, file_postfix=post)
                         get_landmarks(aligned_path, file_prefix=pre, file_postfix=post)
                         aligned_error = None

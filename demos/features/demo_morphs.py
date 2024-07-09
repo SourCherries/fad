@@ -49,21 +49,14 @@ face_array, p, morph_path = morph(str(FRL.dir_aligned) + os.sep,
                                   file_postfix=FRL.file_bookends[1])
 
 
-# FRL = fd.Ensemble(dir_source = Path(morph_path), file_bookends = ("N","png"), make_windowed_faces=True, INTER_PUPILLARY_DISTANCE = 64)
-
-#  File "/Users/z10722/miniconda3/envs/fad/lib/python3.12/site-packages/fad/align/make_aligned_faces.py", line 875, in align_procrustes
-#     os.chdir(save_to_dir)
-# FileNotFoundError: [Errno 2] No such file or directory: '/Users/z10722/Tools/fad/demos/features/FRL-LS-aligned-morphed-aligned/'
-
-
-# This works
-# in make_aligned_faces / align_procrustes
-#   called from ensemble line 542
-# fd.align.make_files.clone_directory_tree()
-output_dir = fd.align.make_files.clone_directory_tree(MotherDir=morph_path, 
-                                                      new_dir="aligned",
-                                                      FilePrefix="N",
-                                                      FilePostfix="png")
-
-
 FRL = fd.Ensemble(dir_source = Path(morph_path), file_bookends = ("N","png"), make_windowed_faces=True, INTER_PUPILLARY_DISTANCE = 64)
+ID = ["N"+str(i) for i in range(num_morphs)]
+for i in range(num_morphs):
+    FRL.add_to_roster(ID[i])
+FRL.clip_roster_margins(margins=(1/6, 1/4))
+FRL.display_roster()
+
+FRL = fd.Ensemble(dir_source = Path(morph_path), file_bookends = ("N","png"))
+for i in range(num_morphs):
+    FRL.add_to_roster(ID[i])
+FRL.display_roster()
