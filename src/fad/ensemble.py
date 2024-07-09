@@ -18,6 +18,7 @@ import matplotlib.pyplot as plt
 # import alignfaces as afa
 # import .align as afa
 from .align.make_aligned_faces import get_source_files, get_landmarks, align_procrustes, place_aperture
+from .align.make_aligned_faces import morph_between_two_faces as morph
 from .align.make_files import clone_directory_tree
 
 from .features.filters import face_filters, get_eo, eo_montage
@@ -467,6 +468,17 @@ class Ensemble:
     # NEXT: method to set CriterionQuantileAmp
     # NEXT: method to show face
     # NEXT: method to add Face to Faces
+
+    def roster_morph_between(self, num_morphs: int):
+        assert len(self.Roster)==2
+        assert num_morphs > 2
+        face_array, p, morph_path = morph(str(self.dir_aligned) + os.sep,
+                                        do_these=[0, 1],
+                                        num_morphs=num_morphs,
+                                        file_prefix=self.file_bookends[0],
+                                        file_postfix=self.file_bookends[1])
+        results = {"face_array": face_array, "p": p, "morph_path": morph_path}
+        return results
 
 def make_features(ens: Ensemble, file_name: str):
     L = ens.landmarks[file_name]
