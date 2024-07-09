@@ -7,7 +7,7 @@ import numpy as np
 from skimage.io import imsave
 
 import fad as fd
-import fad.features.shift_features as shift
+
 
 # -----------------------------------------------
 # from .align.make_aligned_faces import get_source_files, get_landmarks, align_procrustes, place_aperture
@@ -24,7 +24,7 @@ import fad.features.shift_features as shift
 # from fad import align as af
 # af.make_aligned_faces.morph_between_two_faces
 
-from fad.align.make_aligned_faces import morph_between_two_faces as morph
+# from fad.align.make_aligned_faces import morph_between_two_faces as morph
 # -----------------------------------------------
 
 # HERE = Path(__file__).resolve().parent
@@ -41,12 +41,13 @@ FRL.list_faces()
 FRL.add_to_roster(ID[0])
 FRL.add_to_roster(ID[1])
 
-num_morphs = 5
-face_array, p, morph_path = morph(str(FRL.dir_aligned) + os.sep,
-                                  do_these=[0, 1],
-                                  num_morphs=num_morphs,
-                                  file_prefix=FRL.file_bookends[0],
-                                  file_postfix=FRL.file_bookends[1])
+results = FRL.roster_morph_between(num_morphs=5)
+morph_path = results["morph_path"]
+# face_array, p, morph_path = morph(str(FRL.dir_aligned) + os.sep,
+#                                   do_these=[0, 1],
+#                                   num_morphs=num_morphs,
+#                                   file_prefix=FRL.file_bookends[0],
+#                                   file_postfix=FRL.file_bookends[1])
 
 
 FRL = fd.Ensemble(dir_source = Path(morph_path), file_bookends = ("N","png"), make_windowed_faces=True, INTER_PUPILLARY_DISTANCE = 64)
@@ -54,11 +55,11 @@ FRL = fd.Ensemble(dir_source = Path(morph_path), file_bookends = ("N","png"), ma
 # for i in range(num_morphs):
 #     FRL.add_to_roster(ID[i])
 FRL.add_all_to_roster()
+FRL.combine_roster_features()
 FRL.clip_roster_margins(margins=(1/6, 1/4))
 FRL.display_roster()
 
-FRL = fd.Ensemble(dir_source = Path(morph_path), file_bookends = ("N","png"))
-# for i in range(num_morphs):
-#     FRL.add_to_roster(ID[i])
-FRL.add_all_to_roster()
-FRL.display_roster()
+# FRL = fd.Ensemble(dir_source = Path(morph_path), file_bookends = ("N","png"))
+# FRL.add_all_to_roster()
+# FRL.display_roster()
+# FRL.com

@@ -203,6 +203,7 @@ class Ensemble:
                 for i in range(6):
                     file_full = self.dir_wrff / (ID + "-" + str(i+1) + ".png")
                     imsave(file_full, F[:,:,i], check_contrast=False)
+                self.WRFF = True
             SHAPE = F.shape[:2]
         else:
             img = np.array(PilImage.open(self.dir_source / file_name).convert("L"))
