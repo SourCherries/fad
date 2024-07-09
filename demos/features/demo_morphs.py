@@ -50,13 +50,15 @@ face_array, p, morph_path = morph(str(FRL.dir_aligned) + os.sep,
 
 
 FRL = fd.Ensemble(dir_source = Path(morph_path), file_bookends = ("N","png"), make_windowed_faces=True, INTER_PUPILLARY_DISTANCE = 64)
-ID = ["N"+str(i) for i in range(num_morphs)]
-for i in range(num_morphs):
-    FRL.add_to_roster(ID[i])
+# ID = ["N"+str(i) for i in range(num_morphs)]
+# for i in range(num_morphs):
+#     FRL.add_to_roster(ID[i])
+FRL.add_all_to_roster()
 FRL.clip_roster_margins(margins=(1/6, 1/4))
 FRL.display_roster()
 
 FRL = fd.Ensemble(dir_source = Path(morph_path), file_bookends = ("N","png"))
-for i in range(num_morphs):
-    FRL.add_to_roster(ID[i])
+# for i in range(num_morphs):
+#     FRL.add_to_roster(ID[i])
+FRL.add_all_to_roster()
 FRL.display_roster()

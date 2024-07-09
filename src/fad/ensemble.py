@@ -210,6 +210,11 @@ class Ensemble:
             ROI = None
         self.Roster.append(Face(name=file_name,img=img,ROI=ROI,F=F,SHAPE=SHAPE,feature_labels=self.feature_labels))
 
+    def add_all_to_roster(self):
+        file_names = list(self.landmarks)
+        for f in file_names:
+            self.add_to_roster(f)
+
     def empty_roster(self):
         self.Roster = []
 
