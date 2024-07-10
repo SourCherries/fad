@@ -178,7 +178,7 @@ class Ensemble:
     # Roster methods ------------------------------------------------
 
     # Roster management
-    def add_to_roster(self, file_name):
+    def add_to_roster(self, file_name, make_features=True):
         if len(file_name.split(".")) == 1:
             file_name = file_name + "." + self.file_extension
         L = self.landmarks[file_name]
@@ -195,7 +195,8 @@ class Ensemble:
                 for i in range(6):
                     file_full = self.dir_wrff / (ID + "-" + str(i+1) + ".png")
                     F[:,:,i] = np.array(PilImage.open(file_full).convert("L"))
-            else:
+                SHAPE = F.shape[:2]
+            elif make_features:
                 EO = get_eo(img, self.ffilters)
                 chosen_coefficients = select_coefficients_by_feature(EO, ROI, self.CriterionQuantileAmp)
                 F = reconstruct(self.sfilters, EO, chosen_coefficients, img_format="uint8")
@@ -204,7 +205,10 @@ class Ensemble:
                     file_full = self.dir_wrff / (ID + "-" + str(i+1) + ".png")
                     imsave(file_full, F[:,:,i], check_contrast=False)
                 self.WRFF = True
-            SHAPE = F.shape[:2]
+                SHAPE = F.shape[:2]
+            else:
+                F = None
+                SHAPE = img.shape
         else:
             img = np.array(PilImage.open(self.dir_source / file_name).convert("L"))
             F = None
@@ -212,10 +216,10 @@ class Ensemble:
             ROI = None
         self.Roster.append(Face(name=file_name,img=img,ROI=ROI,F=F,SHAPE=SHAPE,feature_labels=self.feature_labels))
 
-    def add_all_to_roster(self):
+    def add_all_to_roster(self, make_features=True):
         file_names = list(self.landmarks)
         for f in file_names:
-            self.add_to_roster(f)
+            self.add_to_roster(f, make_features=make_features)
 
     def empty_roster(self):
         self.Roster = []
