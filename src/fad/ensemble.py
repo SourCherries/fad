@@ -567,11 +567,11 @@ def prepare_aligned(ens: Ensemble, ipd=None):
             aligned_error = None
             if ens.make_windowed_faces:
                 no_save = False
-                apresults, aperture_path = place_aperture(aligned_path, file_prefix=pre, file_postfix=post, no_save=no_save)
+                apresults, aperture_path = place_aperture(aligned_path, file_prefix=pre, file_postfix=post, no_save=no_save, contrast_norm="mean_127")
                 assert Path(aperture_path) == ens.dir_windowed                
             else:
                 no_save = True
-                apresults = place_aperture(aligned_path, file_prefix=pre, file_postfix=post, no_save=no_save)
+                apresults = place_aperture(aligned_path, file_prefix=pre, file_postfix=post, no_save=no_save, contrast_norm="mean_127")
             ens.aperture = apresults
             ens.WINDOW = True
     else:
@@ -598,11 +598,11 @@ def prepare_aligned(ens: Ensemble, ipd=None):
                         aligned_error = None
                         if ens.make_windowed_faces:
                             no_save = False
-                            apresults, aperture_path = place_aperture(aligned_path, file_prefix=pre, file_postfix=post, no_save=no_save)
+                            apresults, aperture_path = place_aperture(aligned_path, file_prefix=pre, file_postfix=post, no_save=no_save, contrast_norm="mean_127")
                             assert Path(aperture_path) == ens.dir_windowed                
                         else:
                             no_save = True
-                            apresults = place_aperture(aligned_path, file_prefix=pre, file_postfix=post, no_save=no_save)
+                            apresults = place_aperture(aligned_path, file_prefix=pre, file_postfix=post, no_save=no_save, contrast_norm="mean_127")
                         ens.aperture = apresults
                         ens.WINDOW = True
                 else:
@@ -628,11 +628,11 @@ def prepare_aligned(ens: Ensemble, ipd=None):
                             aligned_path = str(ens.dir_aligned) + os.sep
                             if ens.make_windowed_faces:
                                 no_save = False
-                                apresults, aperture_path = place_aperture(aligned_path, file_prefix=pre, file_postfix=post, no_save=no_save)
+                                apresults, aperture_path = place_aperture(aligned_path, file_prefix=pre, file_postfix=post, no_save=no_save, contrast_norm="mean_127")
                                 assert Path(aperture_path) == ens.dir_windowed                
                             else:
                                 no_save = True
-                                apresults = place_aperture(aligned_path, file_prefix=pre, file_postfix=post, no_save=no_save)
+                                apresults = place_aperture(aligned_path, file_prefix=pre, file_postfix=post, no_save=no_save, contrast_norm="mean_127")
                             ens.aperture = apresults
                             ens.WINDOW = True                                                        
     return aligned_error
