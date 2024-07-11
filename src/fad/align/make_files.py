@@ -10,7 +10,7 @@ def get_source_files(MotherDir, FilePrefix="", FilePostfix="jpg"):
     for p in MotherDir.rglob(FilePrefix + "*" + FilePostfix):
         input_files.append(str(p))
         print(str(p))
-    return input_files
+    return sorted(input_files)
 
 
 # Run at outset of align_procrustes() and place_aperture()
