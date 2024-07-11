@@ -1120,7 +1120,7 @@ def warp_to_mean_landmarks(source_dir, file_prefix='', file_postfix='jpg'):
 
     # Mean of warped and normalized faces, and save to file
     AverageOfMorphs = contrast_stretch(WTMN.mean(axis=0), type="max")
-    out_png = output_dir + os.path.sep + "N-mean.png"
+    out_png = output_dir + os.path.sep + "MEAN-N.png"
     # cv2.imwrite(out_png, AverageOfMorphs)
     PilImage.fromarray(AverageOfMorphs).save(out_png)
 
