@@ -71,6 +71,10 @@ venv.bak/
 # Other stuff specific to my package
 .DS_Store
 
+landmarks.txt
+results_temporary.dat
+specs.csv
+
 # demos/align/1_basic/faces-aligned/premium/women/*.jpg
 demos/align/1_basic/faces-aligned/*.jpg
 demos/align/1_basic/faces-aligned-windowed/*.png
