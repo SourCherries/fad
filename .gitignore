@@ -75,7 +75,9 @@ landmarks.txt
 results_temporary.dat
 specs.csv
 
-# demos/align/1_basic/faces-aligned/premium/women/*.jpg
+demos/align/1_basic/faces-aligned-windowed/
+demos/align/1_basic/faces-aligned/
+
 demos/align/1_basic/faces-aligned/*.jpg
 demos/align/1_basic/faces-aligned-windowed/*.png
 demos/align/1_basic/faces-aligned-wrff/*.png
