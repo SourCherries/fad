@@ -73,7 +73,15 @@ venv.bak/
 
 # demos/align/1_basic/faces-aligned/premium/women/*.jpg
 demos/align/1_basic/faces-aligned/*.jpg
-demos/align/1_basic/faces-aligned-windowed/*.jpg
+demos/align/1_basic/faces-aligned-windowed/*.png
+demos/align/1_basic/faces-aligned-wrff/*.png
+
+demos/align/2_morph/an-unusual-pair-aligned/*.jpg
+demos/align/2_morph/an-unusual-pair-aligned-morphed/*.png
+demos/align/2_morph/an-unusual-pair-aligned-morphed-windowed/*.png
+
+demos/align/3_average/faces-of-merkel-aligned/*.jpg
+demos/align/3_average/faces-of-merkel-aligned-warp-to-mean/*.png
 
 results/friends-aligned-windowed/*png
 results/friends-aligned-wrff/*png
