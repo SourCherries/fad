@@ -105,136 +105,40 @@ Manual landmark selection was required in Burton et al. (2005), whereas AFA auto
 To learn how to do this please see [demo 3](demos/align/3_average/README.md).
 
 
-# Setup
+# Setup 🚀
 
 It is highly recommended that you have **conda** installed, preferably **miniconda** rather than full fat **anaconda**.
 
 If you do have **conda**, then do the following to install:
 ```
-conda create --name myenv conda-forge::dlib "python>=3.9" scikit-image
+conda create --name fad conda-forge::dlib "python>=3.9" scikit-image
 
-conda activate myenv
+conda activate fad
 
-pip install "alignfaces @ git+https://git@github.com/SourCherries/auto-face-align.git"
+conda install -c conda-forge matplotlib
+
+conda install tqdm
+
+pip install "fad @ git+https://git@github.com/SourCherries/fad.git"
 ```
 
-This will create a new virtual environment called `myenv`. You can use another name for that. You'll need to activate this environment using `conda activate myenv` whenever you want to use AFA. To deactivate, simply type `conda deactivate myenv`.
+This will create a new virtual environment called `fad`. You can use another name for that. You'll need to activate this environment using `conda activate fad` whenever you want to use FAD. To deactivate, simply type `conda deactivate`.
 
-Windows users may encounter a problem with plotting. That is a [general issue](https://stackoverflow.com/questions/69786885/after-conda-update-python-kernel-crashes-when-matplotlib-is-used) with **Matplotlib** on Windows. To fix, simply type the following while your `myenv` is activated:
+Windows users may encounter a problem with plotting. That is a [general issue](https://stackoverflow.com/questions/69786885/after-conda-update-python-kernel-crashes-when-matplotlib-is-used) with **Matplotlib** on Windows. To fix, simply type the following while your `fad` is activated:
 
 ```
 conda install freetype=2.10.4
 ```
 
-# How well does this work?
-In addition to unit-testing critical computations, I evaluated both landmark estimation (DLIB) and the outcome of the entire alignment procedure using various face databases. The results are described [here](results/README.md).
+# How well does this work? 🚀
+In addition to unit-testing critical computations, I evaluated both landmark estimation (DLIB) and the outcome of the entire alignment procedure using various face databases (spanning ethnicity and facial expression). The results are described [here](results/README.md).
 
-<!-- ## Ensure that you have the proper C compiler
-On Linux, you will already have an appropriate C compiler.
-
-On Windows, you need to install Microsoft Visual Studio.
-
-On Mac, you need to install Xcode Command Line Tools.
-1. Find an Xcode version compatible with your [macOS version](https://en.wikipedia.org/wiki/Xcode).
-2. Get the right version of [Xcode Command Line Tools](https://developer.apple.com/downloads/index.action).
-
-## Create a virtual environment
-
-## Copy package
-```
-git clone --recursive https://github.com/SourCherries/facepackage-slim.git
-cd facepackage-slim/alignfaces2
-pip install cmake
-python setup.py install
-``` -->
-
-# Citation
+# Citation 🚧
 If you use this package for your research, please cite the following preprint:
 >Gaspar, C. M., & Garrod, O. G. B. (2021, November 8). A Python toolbox for Automatic Face Alignment (AFA). Retrieved from psyarxiv.com/erc8a
 
 DOI:
 >10.31234/osf.io/erc8a
 
-# License
+# License 🚀
 This module is under an Apache-2.0 license.
-<!-- **AFA** can also: -->
-
-<!-- - Detect facial landmarks using the highly [DLIB](http://dlib.net) library, output to JSON file
-- Overlay a window around faces, in the form of a separable alpha channel
-- Create morphed faces gradually transform from one face to another -->
-
-<!-- - Detect facial landmarks
-- Overlay a window around faces
-- Create morphed faces gradually transform from one face to another -->
-
-
-
-<!-- # Code -->
-
-
-<!-- # A collapsible section with markdown
-<details>
-  <summary>Click to expand!</summary>
-
-  ## Heading
-  1. A numbered
-  2. list
-     * With some
-     * Sub bullets
-</details>
-
-
-
-This module can be repurposed in many ways.
-A couple of examples that come to mind:
-
-- Extraction and recombination of facial features
-
-To promote extensibility and reusability:
-- Landmarks are output to a JSON file
-- Image windows take the form of a separable alpha channel
-- Package is organized into a modular fashion, with detailed documentation -->
-
-
-<!-- # Ollie's succesful installation on Windows 10 (?)
-```
-conda create --name facepackage-pip  
-conda activate facepackage-pip  
-conda install python=3.9.5 pytest=6.2.4  
-
-cd $MYFACEPACKAGEDIR/alignfaces2  
-pip install cmake  
-pip install -r requirements.txt  
-
-python setup.py install  
-
-cd $MYFACEPACKAGEDIR/alignfaces2/src/alignfaces2/tests  
-pytest - v  
-
-cd $MYFACEPACKAGEDIR/demos/your_project_here  
-python basic_script.py  
-``` -->
-
-<!-- # facepackage
-
-Just click on the green button at the top right to download this as a zip file.
-
-* if you want to do more than testing, let me know via email
-* otherwise, please do not make any changes
-
-Put somewhere on your computer.
-
-Go to /alignfaces2 and read install-generic.rtf
-
-Additional details for macos users should be read in install-macos.rtf
-
-Those are all the instructions you need.
-If I missed something, let me know!
-
-What I need from you:
-1. Your operating system and version of Python (should be 3+).
-2. Install successful? If not, copy of error messages.
-3. Test successful? If not, copy of error messages.
-
-Thanks again dear testers,
-Carl -->
