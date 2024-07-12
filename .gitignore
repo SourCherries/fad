@@ -83,6 +83,20 @@ demos/align/2_morph/an-unusual-pair-aligned-morphed-windowed/*.png
 demos/align/3_average/faces-of-merkel-aligned/*.jpg
 demos/align/3_average/faces-of-merkel-aligned-warp-to-mean/*.png
 
+demos/features/faces-of-merkel-aligned/*.jpg
+demos/features/faces-of-merkel-aligned-windowed/*.png
+demos/features/faces-of-merkel-aligned-warp-to-mean/*.png
+demos/features/faces-of-merkel-aligned-warp-to-mean-aligned/*.png
+demos/features/faces-of-merkel-aligned-warp-to-mean-aligned-windowed/*.png
+
+demos/features/FRL-LS-aligned/*.jpg
+demos/features/FRL-LS-aligned-wrff/*.png
+demos/features/FRL-LS-aligned-windowed/*.png
+demos/features/FRL-LS-aligned-morphed/*.png
+demos/features/FRL-LS-aligned-morphed-aligned/*.png
+demos/features/FRL-LS-aligned-morphed-aligned-wrff/*.png
+demos/features/FRL-LS-aligned-morphed-aligned-windowed/*.png
+
 results/friends-aligned-windowed/*png
 results/friends-aligned-wrff/*png
 results/friends-aligned/*jpg
