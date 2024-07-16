@@ -6,7 +6,7 @@ A Python package that generates face stimuli for a wide range of psychology and 
 
 These are the two main functions supported by FAD:
 
-* [**Face alignment**](#alignment-id) that is validated on databases popular among experimental psychologists
+* [Face alignment](#alignment-id) that is validated on databases popular among experimental psychologists
 * **Isolation and rearrangement of facial features** using a novel method based on human physiology
 
 Along with other functions (**morphing** and **windowing**), FAD can produce some of the most popular types of stimuli used in face perception studies (e.g., Chimeric faces).
@@ -58,9 +58,11 @@ FAD can also be used to produce stimuli yet to be studied -- using novel feature
 <img src="overview.png" usemap="#overview" /> -->
 
 # Alignment {#alignment-id}
+
 ![](demos/align/1_basic/collage_originals.png)
 
-#### But you want to line up all of the faces like this:
+But you want to line up all of the faces like this:
+
 ![](demos/align/1_basic/collage_aligned.png)
 
 <!-- #### Specifically, the locations of facial features should overlap across images, as you can confirm here: -->
@@ -69,10 +71,12 @@ FAD can also be used to produce stimuli yet to be studied -- using novel feature
 <!-- <p align="center" width="100%">
     <img width="33%" src="demos/align/1_basic/animation_aligned.gif">
 </p> -->
-#### Perhaps you would also like to window the faces to show only inner facial features like this:
+Perhaps you would also like to window the faces to show only inner facial features like this:
+
 ![](demos/align/1_basic/collage_aligned_windowed.png)
 
-#### All of the above can be done using AFA like this:
+All of the above can be done using AFA like this:
+
 ```python
 import alignfaces as afa
 
@@ -82,6 +86,7 @@ aligned_path = afa.align_procrustes(faces_path)
 afa.get_landmarks(aligned_path)
 the_aperture, aperture_path = afa.place_aperture(aligned_path)
 ```
+
 To better understand how to write a script for your specific purposes, we direct you to [demo 1](demos/align/1_basic/README.md). [Demo 1](demos/align/1_basic/README.md) also describes how AFA alignment works.
 
 All of these functions depend on reliable detection of facial landmarks, which is provided by the [DLIB](http://dlib.net) library. Alignment is based on generalized Procrustes analysis (GPA), which extensively unit tested.
@@ -91,14 +96,12 @@ Automatic landmark detection means that it is also easy to separate **shape** an
 
 AFA provides functions for two types of face-warping manipulations common in face perception research.
 
-### Morphing between faces
+## Morphing between faces
 <!-- Here we gradually morph between [Choi Min-sik](https://en.wikipedia.org/wiki/Choi_Min-sik) (on the far left) and [Sarah Silverman](https://en.wikipedia.org/wiki/Sarah_Silverman) (on the far right) in equal 9 steps:
 ![](demos/align/2_morph/figure-demo-2.png) -->
 To learn how to do this please see [demo 2](demos/align/2_morph/README.md).
 
-
-
-### Enhanced average of facial identity
+## Enhanced average of facial identity
 <!-- First we used AFA to align various photos of [Tony Blair](https://en.wikipedia.org/wiki/Tony_Blair) taken at different times and under different conditions. A simple average of these aligned faces is shown on the left.
 
 Prior to averaging, we can also use AFA to warp each image of Tony Blair to match the average of landmark positions across each instance of Tony Blair. This enhanced average is shown on the far right.
@@ -116,7 +119,6 @@ We used the same photos of Tony Blair as they used (in their Figure 3).
 Manual landmark selection was required in Burton et al. (2005), whereas AFA automated the entire process in our demo. -->
 
 To learn how to do this please see [demo 3](demos/align/3_average/README.md).
-
 
 # Setup 🚀
 
