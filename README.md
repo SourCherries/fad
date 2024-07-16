@@ -8,8 +8,8 @@ A Python package that generates face stimuli for a wide range of psychology and 
 
 These are the two main functions supported by FAD:
 
-* [Face alignment](#alignment-and-windowing) that is validated on databases popular among experimental psychologists
-* **Isolation and rearrangement of facial features** using a novel method based on human physiology
+* [**Face alignment**](#alignment-and-windowing) that is validated on databases popular among experimental psychologists
+* [**Isolation and rearrangement of facial features**](#feature-processing) using a novel method based on human physiology
 
 Along with other functions (**morphing** and **windowing**), FAD can produce some of the most popular types of stimuli used in face perception studies (e.g., Chimeric faces).
 
@@ -90,8 +90,8 @@ The variable `face_library` is an instance of a face `Ensemble` that contains al
 face_library.list_faces()  # lists faces in Ensemble
 face_library.add_to_roster("dick") # adds dick.jpg to your Roster
 face_library.add_to_roster("jane") # adds jane.jpg to your Roster
-face_library.clip_roster_margins(margins=(1/6, 1/4))  # crop images
-face_library.display_roster()  # show each face one-by-one in sequence of figures
+face_library.clip_roster_margins(margins=(1/6, 1/4))  # crop images in your Roster
+face_library.display_roster()  # display figure of each face in your Roster one-by-one
 ```
 
 ## Functional approach
