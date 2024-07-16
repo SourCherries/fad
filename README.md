@@ -42,48 +42,66 @@ FAD can also be used to produce stimuli yet to be studied -- using novel feature
         features --> other
 ```
 
-<!-- <svg width="100" height="100">
-  <circle cx="50" cy="50" r="40" stroke="green" stroke-width="4" fill="yellow" />
-  Sorry, your browser does not support inline SVG.
-</svg> -->
-
-<!-- {{< figure src="overview.svg" >}} -->
-
-<!-- {{ readFile "overview.svg" | safeHTML }} -->
-
-<!-- <img src="overview.svg"/> -->
-
-<!-- ![](overview.svg)
-
-<img src="overview.png" usemap="#overview" /> -->
-
-<!-- # Alignment {#alignment} -->
 # Alignment and windowing
 
 ![process-align-window](demos/align/1_basic/figure_main_small.png)
 
-<!-- ![collage-originals](demos/align/1_basic/collage_originals.png)
+We give **FAD** a collection of face images (A) and it spatially aligns all of the faces (B) and can also set them in an aperture (C).
 
-But you want to line up all of the faces like this:
+There are two ways to do this.
 
-![collage-aligned](demos/align/1_basic/collage_aligned.png) -->
+The *object-oriented* approach is preferable as it makes all functions of **FAD** available in one easy-to-use interface.
 
-<!-- #### Specifically, the locations of facial features should overlap across images, as you can confirm here: -->
+The *functional* approach is to explicitly use **FAD** functions in your Python script. This affords greater flexibility.
 
-<!-- ![](demos/align/1_basic/animation_aligned.gif) -->
-<!-- <p align="center" width="100%">
-    <img width="33%" src="demos/align/1_basic/animation_aligned.gif">
-</p> -->
-<!-- Perhaps you would also like to window the faces to show only inner facial features like this:
+## Object-oriented approach
 
-![collage-windowed](demos/align/1_basic/collage_aligned_windowed.png) -->
+Simply create an instance of a face `Ensemble`:
 
-All of the above can be done using AFA like this:
+```python
+faces_path = "/Users/Me/faces/"
+bookends = ("","jpg")
+
+face_library = fd.Ensemble(dir_source=faces_path,
+                           file_bookends=bookends, 
+                           INTER_PUPILLARY_DISTANCE=64, 
+                           make_windowed_faces=True)
+```
+
+This will automatically generate aligned faces in a folder `/Users/Me/faces-aligned/`, and both aligned and windowed faces in a folder `/Users/Me/faces-aligned-windowed/`.
+
+The variable `bookends` tells **FAD** what image files to include in your processing. In this case, all files that end in `jpg`. If you want to include only files that begin with `female` and end in `jpg` then you would write `bookends = ("female", "jpg")`.
+
+To generate aligned faces, you must specify `INTER_PUPILLARY_DISTANCE` in pixels. This will ensure all aligned faces have the same inter-pupillary distance and make feature processing efficient. For more flexibility in the dimensions of aligned faces, you must take the *functional approach* described in the next section.
+
+To generate faces that are both aligned and windowed, you must set `make_windowed_faces` to `True`.
+
+If you also want to decompose all of your faces into facial features you can set `make_all_features` to `True`. We cover facial features in another section.
+
+If you only need aligned and windowed faces, then the above code snipped is all you need.
+
+The variable `face_library` is an instance of a face `Ensemble` that contains all of the information required do further processing -- morphing, feature rearrangement, or some combination of the two.
+
+`face_library` has a number of attributes for managing your workflow like `face_library.INTERPUPILARY_DISTANCE`, `face_library.landmarks`, and `face_library.aperture`.
+
+`face_library` also has methods for performing further processing, which are covered in another section. Here are some simple functions you can call once you have created the Ensemble `face_library`:
+
+```python
+face_library.list_faces()  # lists faces in Ensemble
+face_library.add_to_roster("dick") # adds dick.jpg to your Roster
+face_library.add_to_roster("jane") # adds jane.jpg to your Roster
+face_library.clip_roster_margins(margins=(1/6, 1/4))  # crop images
+face_library.display_roster()  # show each face one-by-one in sequence of figures
+```
+
+## Functional approach
+
+Alternatively, we can make calls to individual **FAD** functions:
 
 ```python
 import alignfaces as afa
 
-faces_path = "/Users/Me/faces_for_my_study/"
+faces_path = "/Users/Me/faces/"
 afa.get_landmarks(faces_path)
 aligned_path = afa.align_procrustes(faces_path)
 afa.get_landmarks(aligned_path)
@@ -93,6 +111,16 @@ the_aperture, aperture_path = afa.place_aperture(aligned_path)
 To better understand how to write a script for your specific purposes, we direct you to [demo 1](demos/align/1_basic/README.md). [Demo 1](demos/align/1_basic/README.md) also describes how AFA alignment works.
 
 All of these functions depend on reliable detection of facial landmarks, which is provided by the [DLIB](http://dlib.net) library. Alignment is based on generalized Procrustes analysis (GPA), which extensively unit tested.
+
+🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧
+
+# Feature processing
+
+![feature-stimuli](demos/features/fig-demos-features.png)
+
+![feature-movie](demos/features/spacing-movie.gif)
+
+🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧
 
 # Additional functions (warping)  {#warping-id}
 
