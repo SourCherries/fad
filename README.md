@@ -57,7 +57,7 @@ FAD can also be used to produce stimuli yet to be studied -- using novel feature
 
 <img src="overview.png" usemap="#overview" /> -->
 
-#### Alignment {#alignment-id}
+# Alignment {#alignment-id}
 ![](demos/align/1_basic/collage_originals.png)
 
 #### But you want to line up all of the faces like this:
