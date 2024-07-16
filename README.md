@@ -61,11 +61,11 @@ FAD can also be used to produce stimuli yet to be studied -- using novel feature
 
 # Alignment {#alignment-id}
 
-![](demos/align/1_basic/collage_originals.png)
+![collage-originals](demos/align/1_basic/collage_originals.png)
 
 But you want to line up all of the faces like this:
 
-![](demos/align/1_basic/collage_aligned.png)
+![collage-aligned](demos/align/1_basic/collage_aligned.png)
 
 <!-- #### Specifically, the locations of facial features should overlap across images, as you can confirm here: -->
 
@@ -75,7 +75,7 @@ But you want to line up all of the faces like this:
 </p> -->
 Perhaps you would also like to window the faces to show only inner facial features like this:
 
-![](demos/align/1_basic/collage_aligned_windowed.png)
+![collage-windowed](demos/align/1_basic/collage_aligned_windowed.png)
 
 All of the above can be done using AFA like this:
 
@@ -93,7 +93,7 @@ To better understand how to write a script for your specific purposes, we direct
 
 All of these functions depend on reliable detection of facial landmarks, which is provided by the [DLIB](http://dlib.net) library. Alignment is based on generalized Procrustes analysis (GPA), which extensively unit tested.
 
-# Additional functions (warping)
+# Additional functions (warping)  {#warping-id}
 
 Automatic landmark detection means that it is also easy to separate **shape** and **texture** in order to produce various kinds of **warped** images.
 
@@ -123,12 +123,13 @@ Manual landmark selection was required in Burton et al. (2005), whereas AFA auto
 
 To learn how to do this please see [demo 3](demos/align/3_average/README.md).
 
-# Setup 🚀
+# Setup 🚀  {#setup-id}
 
 It is highly recommended that you have **conda** installed, preferably **miniconda** rather than full fat **anaconda**.
 
 If you do have **conda**, then do the following to install:
-```
+
+```bash
 conda create --name fad conda-forge::dlib "python>=3.9" scikit-image
 
 conda activate fad
@@ -144,15 +145,15 @@ This will create a new virtual environment called `fad`. You can use another nam
 
 Windows users may encounter a problem with plotting. That is a [general issue](https://stackoverflow.com/questions/69786885/after-conda-update-python-kernel-crashes-when-matplotlib-is-used) with **Matplotlib** on Windows. To fix, simply type the following while your `fad` is activated:
 
-```
+```bash
 conda install freetype=2.10.4
 ```
 
-# How well does this work? 🚀
+# How well does this work? 🚀  {#validate-id}
 
 In addition to unit-testing critical computations, I evaluated both landmark estimation (DLIB) and the outcome of the entire alignment procedure using various face databases (spanning ethnicity and facial expression). The results are described [here](results/README.md).
 
-# Citation 🚧
+# Citation 🚧  {#cite-id}
 
 If you use this package for your research, please cite the following preprint:
 >Gaspar, C. M., & Garrod, O. G. B. (2021, November 8). A Python toolbox for Automatic Face Alignment (AFA). Retrieved from psyarxiv.com/erc8a
@@ -160,6 +161,6 @@ If you use this package for your research, please cite the following preprint:
 DOI:
 >10.31234/osf.io/erc8a
 
-# License 🚀
+# License 🚀  {#license-id}
 
 This module is under an Apache-2.0 license.
