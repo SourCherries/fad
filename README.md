@@ -1,5 +1,7 @@
-Face Alignment and Decomposition (FAD)
-================
+<!-- Face Alignment and Decomposition (FAD)
+================ -->
+# Face Alignment and Decomposition (FAD)
+
 Carl M. Gaspar & Oliver G.B. Garrod
 
 A Python package that generates face stimuli for a wide range of psychology and neuroscience experiments.
@@ -92,6 +94,7 @@ To better understand how to write a script for your specific purposes, we direct
 All of these functions depend on reliable detection of facial landmarks, which is provided by the [DLIB](http://dlib.net) library. Alignment is based on generalized Procrustes analysis (GPA), which extensively unit tested.
 
 # Additional functions (warping)
+
 Automatic landmark detection means that it is also easy to separate **shape** and **texture** in order to produce various kinds of **warped** images.
 
 AFA provides functions for two types of face-warping manipulations common in face perception research.
@@ -146,9 +149,11 @@ conda install freetype=2.10.4
 ```
 
 # How well does this work? 🚀
+
 In addition to unit-testing critical computations, I evaluated both landmark estimation (DLIB) and the outcome of the entire alignment procedure using various face databases (spanning ethnicity and facial expression). The results are described [here](results/README.md).
 
 # Citation 🚧
+
 If you use this package for your research, please cite the following preprint:
 >Gaspar, C. M., & Garrod, O. G. B. (2021, November 8). A Python toolbox for Automatic Face Alignment (AFA). Retrieved from psyarxiv.com/erc8a
 
@@ -156,4 +161,5 @@ DOI:
 >10.31234/osf.io/erc8a
 
 # License 🚀
+
 This module is under an Apache-2.0 license.
