@@ -50,9 +50,9 @@ We give **FAD** a collection of face images (A) and it spatially aligns all of t
 
 There are two ways to do this.
 
-The *object-oriented* approach is preferable as it makes all functions of **FAD** available in one easy-to-use interface.
+The *object-oriented* approach may be preferable as it provides an easy-to-use interface for rearranging facial features.
 
-The *functional* approach is to explicitly use **FAD** functions in your Python script. This affords greater flexibility.
+The *functional* approach however affords greater flexibility.
 
 ## Object-oriented approach
 
@@ -70,7 +70,12 @@ face_library = fd.Ensemble(dir_source=faces_path,
 
 This will automatically generate aligned faces in a folder `/Users/Me/faces-aligned/`, and both aligned and windowed faces in a folder `/Users/Me/faces-aligned-windowed/`.
 
-The variable `bookends` tells **FAD** what image files to include in your processing. In this case, all files that end in `jpg`. If you want to include only files that begin with `female` and end in `jpg` then you would write `bookends = ("female", "jpg")`.
+Alignment and feature processing in **FAD** depend on reliable detection of facial landmarks, which is provided by the [DLIB](http://dlib.net) library. Alignment is based on generalized Procrustes analysis (GPA), which extensively unit tested.
+
+<details>
+  <summary><i>Understanding the object-oriented approach</i></summary>
+
+The variable `bookends` tells **FAD** what image files to include in your processing. In this case, all files that end in `jpg`. If you want to include only files that begin with `female` and end in `jpg` then you would write `bookends=("female","jpg")`.
 
 To generate aligned faces, you must specify `INTER_PUPILLARY_DISTANCE` in pixels. This will ensure all aligned faces have the same inter-pupillary distance and make feature processing efficient. For more flexibility in the dimensions of aligned faces, you must take the *functional approach* described in the next section.
 
@@ -94,27 +99,65 @@ face_library.clip_roster_margins(margins=(1/6, 1/4))  # crop images in your Rost
 face_library.display_roster()  # display figure of each face in your Roster one-by-one
 ```
 
+To understand how FAD alignment works, please see [demo 1](demos/align/1_basic/README.md).
+
+</details>
+
+<!-- The variable `bookends` tells **FAD** what image files to include in your processing. In this case, all files that end in `jpg`. If you want to include only files that begin with `female` and end in `jpg` then you would write `bookends = ("female", "jpg")`.
+
+To generate aligned faces, you must specify `INTER_PUPILLARY_DISTANCE` in pixels. This will ensure all aligned faces have the same inter-pupillary distance and make feature processing efficient. For more flexibility in the dimensions of aligned faces, you must take the *functional approach* described in the next section.
+
+To generate faces that are both aligned and windowed, you must set `make_windowed_faces` to `True`.
+
+If you also want to decompose all of your faces into facial features you can set `make_all_features` to `True`. We cover facial features in another section.
+
+If you only need aligned and windowed faces, then the above code snipped is all you need.
+
+The variable `face_library` is an instance of a face `Ensemble` that contains all of the information required do further processing -- morphing, feature rearrangement, or some combination of the two.
+
+`face_library` has a number of attributes for managing your workflow like `face_library.INTERPUPILARY_DISTANCE`, `face_library.landmarks`, and `face_library.aperture`.
+
+`face_library` also has methods for performing further processing, which are covered in another section. Here are some simple functions you can call once you have created the Ensemble `face_library`:
+
+```python
+face_library.list_faces()  # lists faces in Ensemble
+face_library.add_to_roster("dick") # adds dick.jpg to your Roster
+face_library.add_to_roster("jane") # adds jane.jpg to your Roster
+face_library.clip_roster_margins(margins=(1/6, 1/4))  # crop images in your Roster
+face_library.display_roster()  # display figure of each face in your Roster one-by-one
+``` -->
+
 ## Functional approach
 
 Alternatively, we can make calls to individual **FAD** functions:
 
 ```python
-import alignfaces as afa
+from fad import align as af
 
 faces_path = "/Users/Me/faces/"
-afa.get_landmarks(faces_path)
-aligned_path = afa.align_procrustes(faces_path)
-afa.get_landmarks(aligned_path)
-the_aperture, aperture_path = afa.place_aperture(aligned_path)
+file_prefix = ""
+file_postfix = "jpg"
+af.get_landmarks(faces_path)
+
+adjust_size, size_value = "set_eye_distance", 64
+aligned_path = af.align_procrustes(faces_path,
+                                   file_prefix,
+                                   file_postfix,
+                                   adjust_size=adjust_size, 
+                                   size_value=size_value)
+af.get_landmarks(aligned_path, file_prefix, file_postfix)
+the_aperture, aperture_path = af.place_aperture(aligned_path,
+                                                file_prefix, 
+                                                file_postfix)
 ```
 
-To better understand how to write a script for your specific purposes, we direct you to [demo 1](demos/align/1_basic/README.md). [Demo 1](demos/align/1_basic/README.md) also describes how AFA alignment works.
+This will automatically generate aligned faces in a folder `/Users/Me/faces-aligned/`, and both aligned and windowed faces in a folder `/Users/Me/faces-aligned-windowed/`.
 
-All of these functions depend on reliable detection of facial landmarks, which is provided by the [DLIB](http://dlib.net) library. Alignment is based on generalized Procrustes analysis (GPA), which extensively unit tested.
+To better understand how to write a script for your specific purposes, and to understand how FAD alignment works, please see [demo 1](demos/align/1_basic/README.md).
 
 🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧
 
-# Feature processing
+# Feature isolation and rearrangement
 
 ![feature-stimuli](demos/features/fig-demos-features.png)
 
