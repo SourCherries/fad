@@ -9,7 +9,7 @@ A Python package that generates face stimuli for a wide range of psychology and 
 These are the two main functions supported by FAD:
 
 * [**Face alignment**](#alignment-and-windowing) that is validated on databases popular among experimental psychologists
-* [**Isolation and rearrangement of facial features**](#feature-processing) using a novel method based on human physiology
+* [**Isolation and rearrangement of facial features**](#feature-isolation-and-rearrangement) using a novel method based on human physiology
 
 Along with other functions (**morphing** and **windowing**), FAD can produce some of the most popular types of stimuli used in face perception studies (e.g., Chimeric faces).
 
@@ -158,6 +158,10 @@ To better understand how to write a script for your specific purposes, and to un
 🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧
 
 # Feature isolation and rearrangement
+
+🚧 What it is with reference to inline `Friends` figure. A great number of experiments. Define features. After feature decomposition, each face is now 6 images one for each facial feature. To show a face
+
+![friends](results/collage-friends-labeled.png)
 
 ![feature-stimuli](demos/features/fig-demos-features.png)
 
