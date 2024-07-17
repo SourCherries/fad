@@ -70,8 +70,6 @@ face_library = fd.Ensemble(dir_source=faces_path,
 
 This will automatically generate aligned faces in a folder `/Users/Me/faces-aligned/`, and both aligned and windowed faces in a folder `/Users/Me/faces-aligned-windowed/`.
 
-Alignment and feature processing in **FAD** depend on reliable detection of facial landmarks, which is provided by the [DLIB](http://dlib.net) library. Alignment is based on generalized Procrustes analysis (GPA), which extensively unit tested.
-
 <details>
   <summary><i>Understanding the object-oriented approach</i></summary>
 
@@ -163,9 +161,7 @@ To better understand how to write a script for your specific purposes, and to un
 
 ![feature-movie](demos/features/spacing-movie.gif)
 
-🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧🚧
-
-# Additional functions (warping)  {#warping-id}
+# Additional functions (warping) 🚧 (OOP approach with links)
 
 Automatic landmark detection means that it is also easy to separate **shape** and **texture** in order to produce various kinds of **warped** images.
 
@@ -195,7 +191,7 @@ Manual landmark selection was required in Burton et al. (2005), whereas AFA auto
 
 To learn how to do this please see [demo 3](demos/align/3_average/README.md).
 
-# Setup 🚀  {#setup-id}
+# Setup 🚧 (alternative local install)
 
 It is highly recommended that you have **conda** installed, preferably **miniconda** rather than full fat **anaconda**.
 
@@ -221,11 +217,15 @@ Windows users may encounter a problem with plotting. That is a [general issue](h
 conda install freetype=2.10.4
 ```
 
-# How well does this work? 🚀  {#validate-id}
+# How well does this work?
 
-In addition to unit-testing critical computations, I evaluated both landmark estimation (DLIB) and the outcome of the entire alignment procedure using various face databases (spanning ethnicity and facial expression). The results are described [here](results/README.md).
+Alignment and feature processing in **FAD** depend on reliable detection of facial landmarks, which is provided by the [DLIB](http://dlib.net) library.
 
-# Citation 🚧  {#cite-id}
+Alignment is based on generalized Procrustes analysis (GPA), which was extensively unit tested.
+
+In addition to unit-testing critical computations, we evaluated both landmark estimation (DLIB) and the outcome of the entire alignment procedure using various face databases (spanning ethnicity and facial expression). The results are described [here](results/README.md).
+
+# Citation 🚧 (new citation)
 
 If you use this package for your research, please cite the following preprint:
 >Gaspar, C. M., & Garrod, O. G. B. (2021, November 8). A Python toolbox for Automatic Face Alignment (AFA). Retrieved from psyarxiv.com/erc8a
@@ -233,6 +233,6 @@ If you use this package for your research, please cite the following preprint:
 DOI:
 >10.31234/osf.io/erc8a
 
-# License 🚀  {#license-id}
+# License
 
 This module is under an Apache-2.0 license.
