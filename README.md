@@ -46,7 +46,7 @@ FAD can also be used to produce stimuli yet to be studied -- using novel feature
 
 ![process-align-window](demos/align/1_basic/figure_main_small.png)
 
-We give **FAD** a collection of face images (A) and it spatially aligns all of the faces (B) and can also set them in an aperture (C).
+We give **FAD** a collection of face images (**A**) and it spatially aligns all of the faces (**B**) and can also set them in an aperture (**C**).
 
 There are two ways to do this.
 
@@ -59,6 +59,8 @@ The *functional* approach however affords greater flexibility.
 Simply create an instance of a face `Ensemble`:
 
 ```python
+import fad as fd
+
 faces_path = "/Users/Me/faces/"
 bookends = ("","jpg")
 
