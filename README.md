@@ -19,7 +19,9 @@ Along with other functions ([**morphing**](#morphing) and [**windowing**](#align
 4. Second-order feature manipulations
 5. Uncrowded faces
 6. Double-face illusion
-7. Any other type of stimulus that requires feature rearrangement
+7. Morphing between faces
+8. Enhanced average of facial identity
+9. Any type of stimulus that requires feature rearrangement
 
 FAD can also be used to produce stimuli yet to be studied -- using novel feature arrangements and combinations of morphing and feature arrangement.
 
