@@ -15,33 +15,6 @@ Along with other functions ([**morphing**](#morphing) and [**windowing**](#align
 
 FAD can also be used to produce stimuli yet to be studied -- using novel feature arrangements and combinations of morphing and feature arrangement.
 
-```mermaid
-    graph TD;
-        original[Original face photos]
-
-        align[<a href='https://github.com/SourCherries/fad/blob/main/demos/align/1_basic/README.md'>Align</a>]
-
-        window[<a href='https://github.com/SourCherries/fad/blob/main/demos/align/1_basic/README.md#windowing'>Window</a>]
-
-        morph[<a href='https://github.com/SourCherries/fad/blob/main/demos/align/2_morph/README.md'>Morph</a>]
-
-        features[<a href='https://github.com/SourCherries/fad/tree/main/demos/features'>Features</a>]
-
-        thatcher[<a href='https://github.com/SourCherries/fad/tree/main/demos/features/figs/thatcher.png'>Thatcher</a>]
-
-        chimera[<a href='https://github.com/SourCherries/fad/tree/main/demos/features/figs/chimera.png'>Chimera</a>]        
-
-        other[Other]
-
-        original --> align
-        align --> window
-        align --> morph
-        align --> features
-        features --> thatcher
-        features --> chimera
-        features --> other
-```
-
 # Alignment and windowing
 
 ![process-align-window](demos/align/1_basic/figure_main_small.png)
@@ -102,30 +75,6 @@ face_library.display_roster()  # display figure of each face in your Roster one-
 To understand how FAD alignment works, please see [demo 1](demos/align/1_basic/README.md).
 
 </details>
-
-<!-- The variable `bookends` tells **FAD** what image files to include in your processing. In this case, all files that end in `jpg`. If you want to include only files that begin with `female` and end in `jpg` then you would write `bookends = ("female", "jpg")`.
-
-To generate aligned faces, you must specify `INTER_PUPILLARY_DISTANCE` in pixels. This will ensure all aligned faces have the same inter-pupillary distance and make feature processing efficient. For more flexibility in the dimensions of aligned faces, you must take the *functional approach* described in the next section.
-
-To generate faces that are both aligned and windowed, you must set `make_windowed_faces` to `True`.
-
-If you also want to decompose all of your faces into facial features you can set `make_all_features` to `True`. We cover facial features in another section.
-
-If you only need aligned and windowed faces, then the above code snipped is all you need.
-
-The variable `face_library` is an instance of a face `Ensemble` that contains all of the information required do further processing -- morphing, feature rearrangement, or some combination of the two.
-
-`face_library` has a number of attributes for managing your workflow like `face_library.INTERPUPILARY_DISTANCE`, `face_library.landmarks`, and `face_library.aperture`.
-
-`face_library` also has methods for performing further processing, which are covered in another section. Here are some simple functions you can call once you have created the Ensemble `face_library`:
-
-```python
-face_library.list_faces()  # lists faces in Ensemble
-face_library.add_to_roster("dick") # adds dick.jpg to your Roster
-face_library.add_to_roster("jane") # adds jane.jpg to your Roster
-face_library.clip_roster_margins(margins=(1/6, 1/4))  # crop images in your Roster
-face_library.display_roster()  # display figure of each face in your Roster one-by-one
-``` -->
 
 ## Functional approach
 
