@@ -11,7 +11,15 @@ These are the two main functions supported by FAD:
 * [**Face alignment**](#alignment-and-windowing) that is [validated](results/README.md) on databases popular among experimental psychologists
 * [**Isolation and rearrangement of facial features**](#feature-isolation-and-rearrangement) using a [novel method](demos/features/README.md) based on human physiology
 
-Along with other functions ([**morphing**](#morphing) and [**windowing**](#alignment-and-windowing)), FAD can produce some of the most popular types of stimuli used in face perception studies (e.g., Chimeric faces).
+Along with other functions ([**morphing**](#morphing) and [**windowing**](#alignment-and-windowing)), FAD can produce some of the most popular types of stimuli used in face perception studies:
+
+1. Whole-part effect
+2. Composite faces
+3. Thatcher faces
+4. Second-order feature manipulations
+5. Uncrowded faces
+6. Double-face illusion
+7. Any other type of stimulus that requires feature rearrangement
 
 FAD can also be used to produce stimuli yet to be studied -- using novel feature arrangements and combinations of morphing and feature arrangement.
 
