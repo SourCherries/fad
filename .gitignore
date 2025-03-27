@@ -103,6 +103,30 @@ demos/features/FRL-LS-aligned-morphed-aligned/*.png
 demos/features/FRL-LS-aligned-morphed-aligned-wrff/*.png
 demos/features/FRL-LS-aligned-morphed-aligned-windowed/*.png
 
+# output of demos/features/run_demos.py
+demos/features/stimuli/raw-0.png
+demos/features/stimuli/raw-1.png
+demos/features/stimuli/features-0.png
+demos/features/stimuli/features-1.png
+demos/features/figs/thatcher.png
+demos/features/stimuli/thatcher-0.png
+demos/features/stimuli/thatcher-1.png
+demos/features/stimuli/whole-part-0.png
+demos/features/stimuli/whole-part-1.png
+demos/features/stimuli/composite-0.png
+demos/features/stimuli/composite-1.png
+demos/features/figs/spaced-out-0.png
+demos/features/figs/spaced-out-1.png
+demos/features/stimuli/exploded-0.png
+demos/features/stimuli/exploded-1.png
+demos/features/figs/double-space-0.png
+demos/features/figs/double-space-1.png
+demos/features/stimuli/double-0.png
+demos/features/stimuli/double-1.png
+demos/features/figs/fat-face.png
+demos/features/stimuli/space-ipd-0.png
+demos/features/stimuli/space-ipd-1.png
+
 results/friends-aligned-windowed/*png
 results/friends-aligned-wrff/*png
 results/friends-aligned/*jpg
