@@ -140,7 +140,11 @@ class Ensemble:
                     csvfile = open(self.dir_aligned / "specs.csv", "r")
                     _ = csvfile.readline()
                     values = csvfile.readline()
-                    self.adjust_size, h, w, IPDtext = [v for v in values.split(",")]
+                    vs = [v for v in values.split(",")]  # because of Windows (extra newline)
+                    if len(vs) !=4:
+                        values = csvfile.readline()
+                        vs = [v for v in values.split(",")]
+                    self.adjust_size, h, w, IPDtext = vs
                     h = int(h)
                     w = int(w)
                     self.INTER_PUPILLARY_DISTANCE = int(IPDtext.split("\n")[0])
