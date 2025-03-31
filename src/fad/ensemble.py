@@ -4,6 +4,7 @@ from pathlib import Path
 import json
 import subprocess
 import os
+import gzip
 
 import numpy as np
 import numpy.typing as npt
@@ -191,23 +192,33 @@ class Ensemble:
             ROI = results["DilatedBW"]            
             img = np.array(PilImage.open(self.dir_aligned / file_name).convert("L"))    
             ID = file_name.split(".")[0]
-            file_full_1 = file_full = self.dir_wrff / (ID + "-1.png")
+            # file_full_1 = file_full = self.dir_wrff / (ID + "-1.png")
+            file_full_1 = file_full = self.dir_wrff / (ID + ".npy.gz")
             if self.WRFF and file_full_1.exists():
                 # ID = file_name.split(".")[0]
                 R, C = self.SHAPE
-                F = np.zeros((R,C,6), dtype=np.uint8)
-                for i in range(6):
-                    file_full = self.dir_wrff / (ID + "-" + str(i+1) + ".png")
-                    F[:,:,i] = np.array(PilImage.open(file_full).convert("L"))
+                # F = np.zeros((R,C,6), dtype=np.uint8)
+                # for i in range(6):
+                #     file_full = self.dir_wrff / (ID + "-" + str(i+1) + ".png")
+                #     F[:,:,i] = np.array(PilImage.open(file_full).convert("L"))
+                with gzip.GzipFile(file_full_1, "r") as f:
+                    F = np.load(f)
                 SHAPE = F.shape[:2]
+                assert F.dtype == np.uint8
+                assert R==SHAPE[0]
+                assert C==SHAPE[1]
+                assert F.shape[2] == 6
             elif make_features:
                 EO = get_eo(img, self.ffilters)
                 chosen_coefficients = select_coefficients_by_feature(EO, ROI, self.CriterionQuantileAmp)
                 F = reconstruct(self.sfilters, EO, chosen_coefficients, img_format="uint8")
                 # 🚧 write to disk
-                for i in range(6):
-                    file_full = self.dir_wrff / (ID + "-" + str(i+1) + ".png")
-                    imsave(file_full, F[:,:,i], check_contrast=False)
+                # for i in range(6):
+                #     file_full = self.dir_wrff / (ID + "-" + str(i+1) + ".png")
+                #     imsave(file_full, F[:,:,i], check_contrast=False)
+                file_full = self.dir_wrff / (ID + ".npy.gz")
+                with gzip.GzipFile(file_full, "w") as f:
+                    np.save(f, F)                
                 self.WRFF = True
                 SHAPE = F.shape[:2]
             else:
@@ -498,9 +509,12 @@ def make_features(ens: Ensemble, file_name: str):
     chosen_coefficients = select_coefficients_by_feature(EO, ROI, ens.CriterionQuantileAmp)
     F = reconstruct(ens.sfilters, EO, chosen_coefficients, img_format="uint8")
     ID = file_name.split(".")[0]
-    for i in range(6):
-        file_full = ens.dir_wrff / (ID + "-" + str(i+1) + ".png")
-        imsave(file_full, F[:,:,i], check_contrast=False)        
+    # for i in range(6):
+    #     file_full = ens.dir_wrff / (ID + "-" + str(i+1) + ".png")
+    #     imsave(file_full, F[:,:,i], check_contrast=False)
+    file_full = ens.dir_wrff / (ID + ".npy.gz")
+    with gzip.GzipFile(file_full, "w") as f:
+        np.save(f, F)
 
 def prepare_source(ens: Ensemble):
     pre=str(ens.file_bookends[0])
@@ -657,19 +671,20 @@ def prepare_features(ens):
         features_error = None
     else:
         # wrff_files = afa.make_files.get_source_files(ens.dir_wrff, pre, "png")
-        wrff_files = get_source_files(ens.dir_wrff, pre, "png")
+        # wrff_files = get_source_files(ens.dir_wrff, pre, "png") .npy.gz
+        wrff_files = get_source_files(ens.dir_wrff, pre, "npy.gz")
         if len(wrff_files) == 0:
             features_error = "No files in WRFF folder matching required pattern."
         else:
             files_rel_wrff = [str(Path(f).stem)[:-2] + "." + ens.file_extension for f in wrff_files]
             need_features = list(set(files_rel_aligned) - set(files_rel_wrff))  # files_rel_aligned from above "aligned" code
             files_rel_wrff = [str(Path(f).stem) for f in wrff_files]
-            complete_files_wrff = [f.removesuffix(ens.file_extension)[:-1] + "-" + str(i+1) for i in range(ens.NUM_FEATURES) for f in files_rel_aligned]  # files_rel_aligned from above "aligned" code
-            missing_a_feature = set(complete_files_wrff) - set(files_rel_wrff)
-            missing_a_feature = set([n[:-2] for n in missing_a_feature])
-            missing_a_feature = [f + "." + ens.file_extension for f in missing_a_feature]
-            need_features.extend(missing_a_feature)
-            need_features = set(need_features)
+            # complete_files_wrff = [f.removesuffix(ens.file_extension)[:-1] + "-" + str(i+1) for i in range(ens.NUM_FEATURES) for f in files_rel_aligned]  # files_rel_aligned from above "aligned" code
+            # missing_a_feature = set(complete_files_wrff) - set(files_rel_wrff)
+            # missing_a_feature = set([n[:-2] for n in missing_a_feature])
+            # missing_a_feature = [f + "." + ens.file_extension for f in missing_a_feature]
+            # need_features.extend(missing_a_feature)
+            # need_features = set(need_features)
             for need in list(need_features):
                 print("Features needed for: " + need)
                 if ens.make_all_features:
